@@ -9,12 +9,12 @@ age 46 using data from the **1970 British Cohort Study (BCS70)**,
 and applies the synthetic confounder sensitivity analysis to assess
 robustness to omitted variable bias.
 
-This md file was created using Claude AI, based on the files associated with
-this repository. 
+This md file was created mostly using Claude, based on the files associated with
+this repository. I have, however, added several clarifying remarks where needed. These are evident from context.
 
-The code was written by the author (Eduardo Fe) using Claude and ChatGPT to 
+The Stata code was written by me (the author, Eduardo Fe) using Claude 4.x. (Pro) and ChatGPT (free) to 
 improve the routines in the file "sensitivity_v18...do" (particularly the bisection algorithm) 
-and the readability of the code. The data preparation_X.do files did not undergo such a procedure and are therefore considerably more "raw". 
+and the readability of the code (a direct implementation of Press et al 1992 only takes you that far in Stata; Claude added several rail guards that the book by Press did not discuss). The data preparation_X.do files did not undergo such a procedure and are therefore considerably more "raw". 
 
 
 ## Data access
