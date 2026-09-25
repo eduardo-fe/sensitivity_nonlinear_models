@@ -1,0 +1,1822 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/user/Library/CloudStorage/Dropbox/Econometrics/politicalBehaviour/bcs70_sens.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res} 4 Sep 2026, 12:35:27
+{txt}
+{com}. 
+. 
+. qui do "/Users/user/Dropbox/Econometrics/perserverance/datapreparation_3.do"
+{txt}
+{com}. qui do "/Users/user/Dropbox/Econometrics/perserverance/datapreparation_1.do"
+{txt}
+{com}. qui do "/Users/user/Dropbox/Econometrics/perserverance/datapreparation_2.do"
+{txt}
+{com}. 
+. keep if isInPerinatalWave==1 & pc1 !=. & (perserverance_1_sd !=. | perserverance_2_sd!=.)
+{txt}(9,074 observations deleted)
+
+{com}. 
+. * ------------------------------------------------------------------------------
+. * Redefine set1 to avoid the "i." operator, exactly as the team's existing
+. * sensitivity-section code already does (analysis_weights.do, line ~347):
+. * FWL-style residualisation inside our package's sens_abc/sensitivity machinery
+. * cannot consume i.varname the way some Stata commands can.
+. * ------------------------------------------------------------------------------
+. tab c_region_birth, gen(region_)
+
+{txt}c_region_bi {c |}
+        rth {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}        699        7.37        7.37
+{txt}          2 {c |}{res}        884        9.32       16.69
+{txt}          3 {c |}{res}        566        5.97       22.66
+{txt}          4 {c |}{res}        317        3.34       26.00
+{txt}          5 {c |}{res}      2,561       27.00       53.01
+{txt}          6 {c |}{res}        590        6.22       59.23
+{txt}          7 {c |}{res}      1,047       11.04       70.27
+{txt}          8 {c |}{res}      1,269       13.38       83.65
+{txt}          9 {c |}{res}        547        5.77       89.41
+{txt}         10 {c |}{res}      1,004       10.59      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      9,484      100.00
+{txt}
+{com}. tab c_sexbirth, gen(sex_)
+
+ {txt}c_sexbirth {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}      4,832       50.95       50.95
+{txt}          2 {c |}{res}      4,651       49.05      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      9,483      100.00
+{txt}
+{com}. global set1 c_delivery_age_mum c_delivery_age_mum_2 region_1 region_2 region_3 region_4 region_5 region_6 region_7 region_8 region_9 region_10 c_mumsmoked c_abnormal_gest sex_2 c_birthweight
+{txt}
+{com}. 
+. * ------------------------------------------------------------------------------
+. * Restrict to the single 2016 (age 46) wave to avoid the repeated-observations
+. * problem described above. panel_labour_outcomes.dta has one row per bcsid per
+. * wave; we keep only wave==2016 before merging, so the merge below is 1:1, not
+. * 1:m, and every row in the working dataset is one person.
+. * ------------------------------------------------------------------------------
+. preserve
+{txt}
+{com}.     use "/Users/user/Documents/datasets/britCohortStudy70/temporary_files/panel_labour_outcomes.dta", clear
+{txt}
+{com}.     keep if wave == 2016
+{txt}(55,797 observations deleted)
+
+{com}.     tempfile labour_age46
+{txt}
+{com}.     save `labour_age46'
+{txt}{p 0 4 2}
+file {bf}
+/var/folders/y4/1szv00wn4rx7db3rjjsg2dwc0000gp/T//S_22122.000002{rm}
+saved
+as .dta format
+{p_end}
+
+{com}. restore
+{txt}
+{com}. 
+. merge 1:1 bcsid using `labour_age46'
+{res}{txt}(label {bf:{txt}B10VOTEWO2} already defined)
+(label {bf:{txt}B10VOTE02} already defined)
+(label {bf:{txt}B10VOTEWO1} already defined)
+(label {bf:{txt}B10VOTE01} already defined)
+(label {bf:{txt}vote97} already defined)
+(label {bf:{txt}votewho} already defined)
+(label {bf:{txt}politint} already defined)
+(label {bf:{txt}b11q25t} already defined)
+(label {bf:{txt}b11q25s} already defined)
+(label {bf:{txt}b11q25r} already defined)
+(label {bf:{txt}b11q25q} already defined)
+(label {bf:{txt}b11q25p} already defined)
+(label {bf:{txt}b11q25o} already defined)
+(label {bf:{txt}b11q25n} already defined)
+(label {bf:{txt}b11q25m} already defined)
+(label {bf:{txt}b11q25l} already defined)
+(label {bf:{txt}b11q25k} already defined)
+(label {bf:{txt}b11q25j} already defined)
+(label {bf:{txt}b11q25i} already defined)
+(label {bf:{txt}b11q25h} already defined)
+(label {bf:{txt}b11q25g} already defined)
+(label {bf:{txt}b11q25f} already defined)
+(label {bf:{txt}b11q25e} already defined)
+(label {bf:{txt}b11q25d} already defined)
+(label {bf:{txt}b11q25c} already defined)
+(label {bf:{txt}b11q25b} already defined)
+(label {bf:{txt}b11q25a} already defined)
+(label {bf:{txt}b11voteeuway} already defined)
+(label {bf:{txt}b11voteeu} already defined)
+(label {bf:{txt}b11votewho4} already defined)
+(label {bf:{txt}b11vote04} already defined)
+(label {bf:{txt}b11polint} already defined)
+(label {bf:{txt}b11cflisd} already defined)
+(label {bf:{txt}b11cfrc} already defined)
+(label {bf:{txt}b11cftot} already defined)
+(label {bf:{txt}b11cfmis} already defined)
+(label {bf:{txt}b11cfcor} already defined)
+(label {bf:{txt}b11cfani} already defined)
+(label {bf:{txt}b11cflisn} already defined)
+(label {bf:{txt}b11netw} already defined)
+(label {bf:{txt}b11econact2} already defined)
+
+{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}           7,376
+{txt}{col 9}from master{col 30}{res}           4,140{txt}  (_merge==1)
+{col 9}from using{col 30}{res}           3,236{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}           5,344{txt}  (_merge==3)
+{col 5}{hline 41}
+
+{com}. drop if _merge == 2
+{txt}(3,236 observations deleted)
+
+{com}. drop _merge
+{txt}
+{com}. 
+. * ------------------------------------------------------------------------------
+. * Full control list for this exercise.
+. * ------------------------------------------------------------------------------
+. global cogcontrols perserverance_2_sd $set1 $set2 $set3 $set4 $set5 $set6 $set7
+{txt}
+{com}. 
+. 
+. 
+. * --- Profile plots for employedFT ---
+. sensitivity_profile employedFT pc1 $cogcontrols, model(logit) ///
+>     rhoy(0.1) ngrid(201) saving(profile_empFT_ry01) replace
+{err}command {bf}sensitivity_profile{sf} is unrecognized
+{txt}{search r(199), local:r(199);}
+
+end of do-file
+
+{search r(199), local:r(199);}
+
+{com}. do "/var/folders/y4/1szv00wn4rx7db3rjjsg2dwc0000gp/T//SD22122.000000"
+{txt}
+{com}. *===============================================================================
+. * sensitivity_profile
+. *
+. * Standalone diagnostic tool for the synthetic confounder sensitivity
+. * analysis. For a FIXED rho_Y, sweeps rho_D across the feasible interval
+. * on a fine grid, computes the adjusted AME and t-statistic at each point,
+. * and produces a two-panel graph showing:
+. *   - Top panel: adjusted AME as a function of rho_D, with a horizontal
+. *     line at AME = 0 (sign-change reference).
+. *   - Bottom panel: |t|-statistic as a function of rho_D, with a
+. *     horizontal line at z_{c -(}alpha/2{c )-} (explain-away reference).
+. *
+. * Threshold crossings are visible as the points where the AME curve
+. * crosses zero (sign change) and where the |t| curve crosses the
+. * critical value (explain away).
+. *
+. * REQUIRES: sens_abc, sens_build_z, sens_fit from the sensitivity package.
+. *   Run/load the main sensitivity_v18.do file first, or paste the three
+. *   helper programs (sens_abc, sens_build_z, sens_fit) before this file.
+. *
+. * SYNTAX:
+. *   sensitivity_profile Y D [X1 X2 ...], model(string) rhoy(real)
+. *       [ngrid(integer 201) seed(integer 12345) level(real 95)
+. *        baseoutcome(integer 1) outcome(string) atmeans
+. *        saving(string) replace scanmargin(real 0.005)]
+. *
+. * EXAMPLES:
+. *   sensitivity_profile Y D X1 X2, model(logit) rhoy(0.3)
+. *   sensitivity_profile Y D X1 X2, model(logit) rhoy(0.3) ngrid(501)
+. *   sensitivity_profile Y D X1 X2, model(mlogit) rhoy(0.3) ///
+> *       baseoutcome(1) outcome(2)
+. *   sensitivity_profile Y D X1 X2, model(logit) rhoy(0.3) ///
+> *       saving(profile_ry03) replace
+. *
+. *===============================================================================
+. 
+. capture program drop sensitivity_profile
+{txt}
+{com}. program define sensitivity_profile, rclass
+{txt}  1{com}.     syntax varlist(min=2) [if] [in],  ///
+>         Model(string)                 ///
+>         RHOY(real)                    ///
+>         [ NGRid(integer 201)          ///
+>           seed(integer 12345)         ///
+>           ATMeans                     ///
+>           BASEoutcome(integer 1)      ///
+>           Level(real 95)              ///
+>           outcome(string)             ///
+>           saving(string)              ///
+>           replace                     ///
+>           SCANMargin(real 0.005) ]
+{txt}  2{com}. 
+.     marksample touse
+{txt}  3{com}. 
+.     gettoken Y varlist : varlist
+{txt}  4{com}.     gettoken D rest    : varlist
+{txt}  5{com}.     local X "`rest'"
+{txt}  6{com}. 
+.     local model = lower("`model'")
+{txt}  7{com}.     if !inlist("`model'","logit","probit","cloglog","poisson", ///
+>                          "nbreg","ologit","mlogit") {c -(}
+{txt}  8{com}.         di as error "Unsupported model: `model'"
+{txt}  9{com}.         exit 198
+{txt} 10{com}.     {c )-}
+{txt} 11{com}. 
+.     if "`model'" == "mlogit" & "`outcome'" == "" {c -(}
+{txt} 12{com}.         di as error "mlogit requires outcome() option"
+{txt} 13{com}.         exit 198
+{txt} 14{com}.     {c )-}
+{txt} 15{com}. 
+.     global sens_X "`X'"
+{txt} 16{com}. 
+.     local alpha = 1 - `level'/100
+{txt} 17{com}.     local z     = invnormal(1 - `alpha'/2)
+{txt} 18{com}.     local atm   = 0
+{txt} 19{com}.     if "`atmeans'" != "" local atm = 1
+{txt} 20{com}. 
+.     set seed `seed'
+{txt} 21{com}. 
+.     di as text _n "{c -(}hline 70{c )-}"
+{txt} 22{com}.     di as text "SENSITIVITY PROFILE: `model'"
+{txt} 23{com}.     di as text "{c -(}hline 70{c )-}"
+{txt} 24{com}.     di as text "Treatment: `D'"
+{txt} 25{com}.     di as text "Outcome:   `Y'"
+{txt} 26{com}.     if "`X'" != "" di as text "Controls:  `X'"
+{txt} 27{com}.     di as text "Fixed rho_Y = " %6.3f `rhoy'
+{txt} 28{com}.     di as text "Grid points: `ngrid'"
+{txt} 29{com}.     di as text "Confidence level: `level'%"
+{txt} 30{com}.     if "`outcome'" != "" di as text "MNL outcome: `outcome'"
+{txt} 31{com}. 
+.     *===========================================================================
+.     * STEP 1: Outcome residuals from short model
+.     *===========================================================================
+. 
+.     if "`model'" == "logit" {c -(}
+{txt} 32{com}.         qui logit `Y' `D' `X' if `touse'
+{txt} 33{com}.         tempvar mu Yr
+{txt} 34{com}.         qui predict double `mu' if `touse', pr
+{txt} 35{com}.         qui gen double `Yr' = (`Y' - `mu') / sqrt(`mu'*(1-`mu')) if `touse'
+{txt} 36{com}.         qui replace `Yr' = 0 if `Yr' == . & `touse'
+{txt} 37{com}.     {c )-}
+{txt} 38{com}.     else if "`model'" == "probit" {c -(}
+{txt} 39{com}.         qui probit `Y' `D' `X' if `touse'
+{txt} 40{com}.         tempvar mu Yr
+{txt} 41{com}.         qui predict double `mu' if `touse', pr
+{txt} 42{com}.         qui gen double `Yr' = (`Y' - `mu') / sqrt(`mu'*(1-`mu')) if `touse'
+{txt} 43{com}.         qui replace `Yr' = 0 if `Yr' == . & `touse'
+{txt} 44{com}.     {c )-}
+{txt} 45{com}.     else if "`model'" == "cloglog" {c -(}
+{txt} 46{com}.         qui cloglog `Y' `D' `X' if `touse'
+{txt} 47{com}.         tempvar mu Yr
+{txt} 48{com}.         qui predict double `mu' if `touse', pr
+{txt} 49{com}.         qui gen double `Yr' = (`Y' - `mu') / sqrt(`mu'*(1-`mu')) if `touse'
+{txt} 50{com}.         qui replace `Yr' = 0 if `Yr' == . & `touse'
+{txt} 51{com}.     {c )-}
+{txt} 52{com}.     else if "`model'" == "poisson" {c -(}
+{txt} 53{com}.         qui poisson `Y' `D' `X' if `touse'
+{txt} 54{com}.         tempvar mu Yr
+{txt} 55{com}.         qui predict double `mu' if `touse', n
+{txt} 56{com}.         qui gen double `Yr' = (`Y' - `mu') / sqrt(`mu') if `touse'
+{txt} 57{com}.         qui replace `Yr' = 0 if `Yr' == . & `touse'
+{txt} 58{com}.     {c )-}
+{txt} 59{com}.     else if "`model'" == "nbreg" {c -(}
+{txt} 60{com}.         qui nbreg `Y' `D' `X' if `touse'
+{txt} 61{com}.         tempvar mu Yr
+{txt} 62{com}.         qui predict double `mu' if `touse', n
+{txt} 63{com}.         local anb = e(alpha)
+{txt} 64{com}.         qui gen double `Yr' = (`Y' - `mu') / sqrt(`mu' + `anb'*`mu'^2) if `touse'
+{txt} 65{com}.     {c )-}
+{txt} 66{com}.     else if "`model'" == "ologit" {c -(}
+{txt} 67{com}.         qui ologit `Y' `D' `X' if `touse'
+{txt} 68{com}.         qui levelsof `Y' if `touse', local(ocats)
+{txt} 69{com}.         local usecat : word 2 of `ocats'
+{txt} 70{com}.         if "`usecat'" == "" local usecat : word 1 of `ocats'
+{txt} 71{com}.         tempvar pr Yr
+{txt} 72{com}.         qui predict double `pr' if `touse', outcome(`usecat')
+{txt} 73{com}.         qui gen double `Yr' = (`Y' == `usecat') - `pr' if `touse'
+{txt} 74{com}.     {c )-}
+{txt} 75{com}.     else if "`model'" == "mlogit" {c -(}
+{txt} 76{com}.         qui mlogit `Y' `D' `X' if `touse', baseoutcome(`baseoutcome')
+{txt} 77{com}.         tempvar pr_o Yr
+{txt} 78{com}.         qui predict double `pr_o' if `touse', outcome(`outcome')
+{txt} 79{com}.         qui gen double `Yr' = (`Y' == real("`outcome'")) - `pr_o' if `touse'
+{txt} 80{com}. 
+.         * Short-model AME for this outcome
+.         if `atm' == 1 qui margins, dydx(`D') atmeans predict(outcome(`outcome'))
+{txt} 81{com}.         else          qui margins, dydx(`D') predict(outcome(`outcome'))
+{txt} 82{com}.         local me_short = r(table)[1,1]
+{txt} 83{com}.         local se_short = r(table)[2,1]
+{txt} 84{com}.     {c )-}
+{txt} 85{com}. 
+.     * Standardise outcome residual
+.     qui sum `Yr' if `touse'
+{txt} 86{com}.     if r(sd) < 1e-8 {c -(}
+{txt} 87{com}.         di as error "Outcome residual SD near zero"
+{txt} 88{com}.         exit 498
+{txt} 89{com}.     {c )-}
+{txt} 90{com}.     qui replace `Yr' = (`Yr' - r(mean)) / r(sd) if `touse'
+{txt} 91{com}. 
+.     *===========================================================================
+.     * STEP 2: Treatment residual (standardised)
+.     *===========================================================================
+.     tempvar Dr
+{txt} 92{com}.     qui reg `D' `X' if `touse'
+{txt} 93{com}.     qui predict double `Dr' if `touse', resid
+{txt} 94{com}.     qui sum `Dr' if `touse'
+{txt} 95{com}.     if r(sd) < 1e-8 {c -(}
+{txt} 96{com}.         di as error "Treatment residual SD near zero"
+{txt} 97{com}.         exit 498
+{txt} 98{com}.     {c )-}
+{txt} 99{com}.     qui replace `Dr' = `Dr' / r(sd) if `touse'
+{txt}100{com}. 
+.     *===========================================================================
+.     * STEP 3: Short-model AME and residual correlation
+.     *===========================================================================
+.     if "`model'" != "mlogit" {c -(}
+{txt}101{com}.         if      "`model'" == "logit"   qui logit   `Y' `D' `X' if `touse'
+{txt}102{com}.         else if "`model'" == "probit"  qui probit  `Y' `D' `X' if `touse'
+{txt}103{com}.         else if "`model'" == "cloglog" qui cloglog `Y' `D' `X' if `touse'
+{txt}104{com}.         else if "`model'" == "poisson" qui poisson `Y' `D' `X' if `touse'
+{txt}105{com}.         else if "`model'" == "nbreg"   qui nbreg   `Y' `D' `X' if `touse'
+{txt}106{com}.         else if "`model'" == "ologit"  qui ologit  `Y' `D' `X' if `touse'
+{txt}107{com}. 
+.         if `atm' == 1 qui margins, dydx(`D') atmeans
+{txt}108{com}.         else          qui margins, dydx(`D')
+{txt}109{com}.         local me_short = r(table)[1,1]
+{txt}110{com}.         local se_short = r(table)[2,1]
+{txt}111{com}.     {c )-}
+{txt}112{com}. 
+.     qui corr `Dr' `Yr' if `touse'
+{txt}113{com}.     local r = r(rho)
+{txt}114{com}. 
+.     di as text _n "Short model AME: " %9.4f `me_short' ///
+>         " (SE: " %7.4f `se_short' ")"
+{txt}115{com}.     di as text "r = cor(D_resid, Y_resid) = " %7.4f `r'
+{txt}116{com}.     di as text "t_short = " %7.2f (`me_short'/`se_short')
+{txt}117{com}. 
+.     *===========================================================================
+.     * STEP 4: Feasible interval
+.     *===========================================================================
+.     local disc_feas = (1 - (`r')^2) * (1 - (`rhoy')^2)
+{txt}118{com}.     if `disc_feas' < 0 {c -(}
+{txt}119{com}.         di as error "No feasible region for rho_Y = `rhoy'"
+{txt}120{com}.         exit 498
+{txt}121{com}.     {c )-}
+{txt}122{com}. 
+.     local rd_lo = max(-0.999, `r'*`rhoy' - sqrt(`disc_feas'))
+{txt}123{com}.     local rd_hi = min( 0.999, `r'*`rhoy' + sqrt(`disc_feas'))
+{txt}124{com}. 
+.     * Nudge if boundary is infeasible
+.     sens_abc, rd(`rd_hi') ry(`rhoy') rho(`r')
+{txt}125{com}.     if $sens_feasible == 0 local rd_hi = `rd_hi' - 0.001
+{txt}126{com}.     sens_abc, rd(`rd_lo') ry(`rhoy') rho(`r')
+{txt}127{com}.     if $sens_feasible == 0 local rd_lo = `rd_lo' + 0.001
+{txt}128{com}. 
+.     * Apply scanmargin
+.     local feas_width = `rd_hi' - `rd_lo'
+{txt}129{com}.     local rd_lo = `rd_lo' + `scanmargin' * `feas_width'
+{txt}130{com}.     local rd_hi = `rd_hi' - `scanmargin' * `feas_width'
+{txt}131{com}. 
+.     di as text "Feasible rho_D range: [" %6.3f `rd_lo' ", " %6.3f `rd_hi' "]"
+{txt}132{com}. 
+.     *===========================================================================
+.     * STEP 5: Fixed epsilon
+.     *===========================================================================
+.     tempvar eps_fixed
+{txt}133{com}.     qui gen double `eps_fixed' = rnormal() if `touse'
+{txt}134{com}.     global sens_eps "`eps_fixed'"
+{txt}135{com}. 
+.     *===========================================================================
+.     * STEP 6: Fine-grid evaluation
+.     *===========================================================================
+.     di as text _n "Evaluating `ngrid' grid points..."
+{txt}136{com}. 
+.     * Store results in a temporary dataset
+.     tempname results
+{txt}137{com}.     matrix `results' = J(`ngrid', 5, .)
+{txt}138{com}.     * col 1 = rho_D, col 2 = ME, col 3 = SE, col 4 = t-stat, col 5 = success
+. 
+.     local n_success = 0
+{txt}139{com}.     local n_fail    = 0
+{txt}140{com}. 
+.     forval g = 1/`ngrid' {c -(}
+{txt}141{com}.         local rd_g = `rd_lo' + (`g'-1) * (`rd_hi' - `rd_lo') / (`ngrid' - 1)
+{txt}142{com}. 
+.         matrix `results'[`g', 1] = `rd_g'
+{txt}143{com}. 
+.         sens_abc, rd(`rd_g') ry(`rhoy') rho(`r')
+{txt}144{com}.         if $sens_feasible == 0 {c -(}
+{txt}145{com}.             matrix `results'[`g', 5] = 0
+{txt}146{com}.             local n_fail = `n_fail' + 1
+{txt}147{com}.             continue
+{txt}148{com}.         {c )-}
+{txt}149{com}. 
+.         sens_build_z, dresid(`Dr') yresid(`Yr') touse(`touse')
+{txt}150{com}.         sens_fit, model(`model') yvar(`Y') dvar(`D') touse(`touse') ///
+>                   atm(`atm') baseoutcome(`baseoutcome') outcome("`outcome'")
+{txt}151{com}.         capture drop _Z_hyp_
+{txt}152{com}. 
+.         if $sens_failed == 0 & $sens_me != . {c -(}
+{txt}153{com}.             matrix `results'[`g', 2] = $sens_me
+{txt}154{com}.             matrix `results'[`g', 3] = $sens_se
+{txt}155{com}.             matrix `results'[`g', 4] = $sens_me / $sens_se
+{txt}156{com}.             matrix `results'[`g', 5] = 1
+{txt}157{com}.             local n_success = `n_success' + 1
+{txt}158{com}.         {c )-}
+{txt}159{com}.         else {c -(}
+{txt}160{com}.             matrix `results'[`g', 5] = 0
+{txt}161{com}.             local n_fail = `n_fail' + 1
+{txt}162{com}.         {c )-}
+{txt}163{com}. 
+.         * Progress indicator every 50 points
+.         if mod(`g', 50) == 0 {c -(}
+{txt}164{com}.             di as text "  ... `g' / `ngrid' done"
+{txt}165{com}.         {c )-}
+{txt}166{com}.     {c )-}
+{txt}167{com}. 
+.     di as text "  Done. Successful: `n_success' / `ngrid'"
+{txt}168{com}.     if `n_fail' > 0 {c -(}
+{txt}169{com}.         di as text "  Failed evaluations: `n_fail'"
+{txt}170{com}.     {c )-}
+{txt}171{com}. 
+.     *===========================================================================
+.     * STEP 7: Build plot dataset and graph
+.     *===========================================================================
+. 
+.     * Preserve current data, build plot dataset
+.     preserve
+{txt}172{com}.     clear
+{txt}173{com}.     qui set obs `ngrid'
+{txt}174{com}. 
+.     qui gen double rho_D  = .
+{txt}175{com}.     qui gen double ME     = .
+{txt}176{com}.     qui gen double SE     = .
+{txt}177{com}.     qui gen double tstat  = .
+{txt}178{com}.     qui gen double abs_t  = .
+{txt}179{com}.     qui gen byte   ok     = 0
+{txt}180{com}. 
+.     forval g = 1/`ngrid' {c -(}
+{txt}181{com}.         qui replace rho_D = `results'[`g', 1] in `g'
+{txt}182{com}.         if `results'[`g', 5] == 1 {c -(}
+{txt}183{com}.             qui replace ME    = `results'[`g', 2] in `g'
+{txt}184{com}.             qui replace SE    = `results'[`g', 3] in `g'
+{txt}185{com}.             qui replace tstat = `results'[`g', 4] in `g'
+{txt}186{com}.             qui replace abs_t = abs(`results'[`g', 4]) in `g'
+{txt}187{com}.             qui replace ok    = 1                      in `g'
+{txt}188{com}.         {c )-}
+{txt}189{com}.     {c )-}
+{txt}190{com}. 
+.     * Drop failed points for clean plotting
+.     qui drop if ok == 0
+{txt}191{com}. 
+.     * Confidence band for AME
+.     qui gen double ME_lo = ME - `z' * SE
+{txt}192{com}.     qui gen double ME_hi = ME + `z' * SE
+{txt}193{com}. 
+.     * Formatting
+.     local ry_fmt : di %5.2f `rhoy'
+{txt}194{com}.     local me_fmt : di %6.3f `me_short'
+{txt}195{com}.     local t_fmt  : di %5.1f (`me_short'/`se_short')
+{txt}196{com}.     local out_label ""
+{txt}197{com}.     if "`outcome'" != "" local out_label ", outcome `outcome'"
+{txt}198{com}. 
+.     * ---- Panel 1: AME ----
+.     twoway ///
+>         (rarea ME_lo ME_hi rho_D, color(gs14) lwidth(none)) ///
+>         (line ME rho_D, lcolor(navy) lwidth(medthick)) ///
+>         (function y = 0, range(rho_D) lcolor(cranberry) lpattern(dash) lwidth(medium)) ///
+>         (function y = `me_short', range(rho_D) lcolor(gs8) lpattern(shortdash) lwidth(thin)) ///
+>         , ///
+>         title("Adjusted AME as a function of {c -(}&rho{c )-}{c -(}sub:D{c )-}" ///
+>               "({c -(}&rho{c )-}{c -(}sub:Y{c )-} = `ry_fmt'`out_label')", size(medium)) ///
+>         xtitle("{c -(}&rho{c )-}{c -(}sub:D{c )-}") ///
+>         ytitle("Adjusted AME") ///
+>         ylabel(, angle(horizontal) format(%7.3f)) ///
+>         xlabel(, format(%5.2f)) ///
+>         legend(order(2 "Adjusted AME" 1 "`level'% CI" ///
+>        3 "AME = 0" 4 "Short-model AME") ///
+>        rows(1) size(small) position(6) lstyle(none) region(lcolor(white))) ///
+>         scheme(s2color) ///
+>                 graphregion(color(white)) plotregion(color(white)) ///
+>         name(sens_profile_ame, replace)
+{txt}199{com}. 
+.     * ---- Panel 2: |t|-statistic ----
+.     twoway ///
+>         (line abs_t rho_D, lcolor(navy) lwidth(medthick)) ///
+>         (function y = `z', range(rho_D) lcolor(cranberry) lpattern(dash) lwidth(medium)) ///
+>         , ///
+>         title("|t|-statistic as a function of {c -(}&rho{c )-}{c -(}sub:D{c )-}" ///
+>               "({c -(}&rho{c )-}{c -(}sub:Y{c )-} = `ry_fmt'`out_label')", size(medium)) ///
+>         xtitle("{c -(}&rho{c )-}{c -(}sub:D{c )-}") ///
+>         ytitle("|t|") ///
+>         ylabel(, angle(horizontal) format(%5.1f)) ///
+>         xlabel(, format(%5.2f)) ///
+>         yline(`z', lcolor(cranberry) lpattern(dash) lwidth(medium)) ///
+>         legend(order(1 "|t|-statistic" 2 "z = `z'") ///
+>                rows(1) size(small) position(6) lstyle(none) region(lcolor(white)) ) ///
+>          graphregion(color(white)) plotregion(color(white)) ///
+>         scheme(s2mono) ///
+>         name(sens_profile_tstat, replace)
+{txt}200{com}. 
+.     * ---- Combined ----
+.     graph combine sens_profile_ame sens_profile_tstat, ///
+>         cols(1) iscale(0.8) ///
+>         title("Sensitivity Profile: `model'", size(medium)) ///
+>         subtitle("Short-model AME = `me_fmt' (t = `t_fmt')" ///
+>                  "Fixed {c -(}&rho{c )-}{c -(}sub:Y{c )-} = `ry_fmt', grid = `ngrid' points", ///
+>                  size(small)) ///
+>         name(sens_profile_combined, replace)
+{txt}201{com}. 
+.     * ---- Save if requested ----
+.     if "`saving'" != "" {c -(}
+{txt}202{com}.         graph export "`saving'_combined.png", name(sens_profile_combined) ///
+>             width(2400) `replace'
+{txt}203{com}.         graph export "`saving'_ame.png", name(sens_profile_ame) ///
+>             width(2400) `replace'
+{txt}204{com}.         graph export "`saving'_tstat.png", name(sens_profile_tstat) ///
+>             width(2400) `replace'
+{txt}205{com}.         di as text _n "Graphs saved to `saving'_combined.png, " ///
+>             "`saving'_ame.png, `saving'_tstat.png"
+{txt}206{com}.     {c )-}
+{txt}207{com}. 
+.     * ---- Save dataset if requested ----
+.     if "`saving'" != "" {c -(}
+{txt}208{com}.         qui save "`saving'_data.dta", `replace'
+{txt}209{com}.         di as text "Data saved to `saving'_data.dta"
+{txt}210{com}.     {c )-}
+{txt}211{com}. 
+.     *===========================================================================
+.     * STEP 8: Locate and report crossings
+.     *===========================================================================
+.     di as text _n "{c -(}hline 70{c )-}"
+{txt}212{com}.     di as text "THRESHOLD CROSSINGS DETECTED"
+{txt}213{com}.     di as text "{c -(}hline 70{c )-}"
+{txt}214{com}. 
+.     local sign0 = sign(`me_short')
+{txt}215{com}. 
+.     * Explain-away crossings: where |t| crosses z
+.     local n_ea = 0
+{txt}216{com}.     local prev_above = .
+{txt}217{com}.     local prev_rd    = .
+{txt}218{com}.     local N = _N
+{txt}219{com}.     forval i = 1/`N' {c -(}
+{txt}220{com}.         local this_t    = abs_t[`i']
+{txt}221{com}.         local this_rd   = rho_D[`i']
+{txt}222{com}.         local this_above = (`this_t' >= `z')
+{txt}223{com}. 
+.         if `prev_above' != . & `this_above' != `prev_above' {c -(}
+{txt}224{com}.             local n_ea = `n_ea' + 1
+{txt}225{com}.             local cross_rd = (`prev_rd' + `this_rd') / 2
+{txt}226{com}.             di as text "  Explain-away crossing #`n_ea' at rho_D ~ " ///
+>                 %7.4f `cross_rd'
+{txt}227{com}.         {c )-}
+{txt}228{com}.         local prev_above = `this_above'
+{txt}229{com}.         local prev_rd    = `this_rd'
+{txt}230{com}.     {c )-}
+{txt}231{com}.     if `n_ea' == 0 {c -(}
+{txt}232{com}.         di as text "  No explain-away crossings (effect remains significant" ///
+>             " throughout)"
+{txt}233{com}.     {c )-}
+{txt}234{com}. 
+.     * Sign-change crossings: where ME crosses zero
+.     local n_sc = 0
+{txt}235{com}.     local prev_sign = .
+{txt}236{com}.     local prev_rd   = .
+{txt}237{com}.     forval i = 1/`N' {c -(}
+{txt}238{com}.         local this_me   = ME[`i']
+{txt}239{com}.         local this_rd   = rho_D[`i']
+{txt}240{com}.         local this_sign = sign(`this_me')
+{txt}241{com}. 
+.         if `prev_sign' != . & `this_sign' != `prev_sign' & `this_sign' != 0 {c -(}
+{txt}242{com}.             local n_sc = `n_sc' + 1
+{txt}243{com}.             local cross_rd = (`prev_rd' + `this_rd') / 2
+{txt}244{com}.             di as text "  Sign-change crossing #`n_sc' at rho_D ~ " ///
+>                 %7.4f `cross_rd'
+{txt}245{com}.         {c )-}
+{txt}246{com}.         local prev_sign = `this_sign'
+{txt}247{com}.         local prev_rd   = `this_rd'
+{txt}248{com}.     {c )-}
+{txt}249{com}.     if `n_sc' == 0 {c -(}
+{txt}250{com}.         di as text "  No sign-change crossings (sign never reverses)"
+{txt}251{com}.     {c )-}
+{txt}252{com}.     di as text "{c -(}hline 70{c )-}"
+{txt}253{com}. 
+.     restore
+{txt}254{com}. 
+.     * Return values
+.     return scalar me_short = `me_short'
+{txt}255{com}.     return scalar se_short = `se_short'
+{txt}256{com}.     return scalar r        = `r'
+{txt}257{com}.     return scalar rho_y    = `rhoy'
+{txt}258{com}.     return scalar rd_lo    = `rd_lo'
+{txt}259{com}.     return scalar rd_hi    = `rd_hi'
+{txt}260{com}.     return scalar n_ea     = `n_ea'
+{txt}261{com}.     return scalar n_sc     = `n_sc'
+{txt}262{com}.     return matrix profile  = `results'
+{txt}263{com}. 
+.     * Clean up
+.     macro drop sens_X sens_eps sens_a sens_b sens_c sens_feasible ///
+>                sens_me sens_se sens_failed sens_delta
+{txt}264{com}. 
+. end
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/y4/1szv00wn4rx7db3rjjsg2dwc0000gp/T//SD22122.000000"
+{txt}
+{com}. 
+. 
+. qui do "/Users/user/Dropbox/Econometrics/perserverance/datapreparation_3.do"
+{txt}
+{com}. qui do "/Users/user/Dropbox/Econometrics/perserverance/datapreparation_1.do"
+{txt}
+{com}. qui do "/Users/user/Dropbox/Econometrics/perserverance/datapreparation_2.do"
+{txt}
+{com}. 
+. keep if isInPerinatalWave==1 & pc1 !=. & (perserverance_1_sd !=. | perserverance_2_sd!=.)
+{txt}(9,074 observations deleted)
+
+{com}. 
+. * ------------------------------------------------------------------------------
+. * Redefine set1 to avoid the "i." operator, exactly as the team's existing
+. * sensitivity-section code already does (analysis_weights.do, line ~347):
+. * FWL-style residualisation inside our package's sens_abc/sensitivity machinery
+. * cannot consume i.varname the way some Stata commands can.
+. * ------------------------------------------------------------------------------
+. tab c_region_birth, gen(region_)
+
+{txt}c_region_bi {c |}
+        rth {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}        699        7.37        7.37
+{txt}          2 {c |}{res}        884        9.32       16.69
+{txt}          3 {c |}{res}        566        5.97       22.66
+{txt}          4 {c |}{res}        317        3.34       26.00
+{txt}          5 {c |}{res}      2,561       27.00       53.01
+{txt}          6 {c |}{res}        590        6.22       59.23
+{txt}          7 {c |}{res}      1,047       11.04       70.27
+{txt}          8 {c |}{res}      1,269       13.38       83.65
+{txt}          9 {c |}{res}        547        5.77       89.41
+{txt}         10 {c |}{res}      1,004       10.59      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      9,484      100.00
+{txt}
+{com}. tab c_sexbirth, gen(sex_)
+
+ {txt}c_sexbirth {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}      4,832       50.95       50.95
+{txt}          2 {c |}{res}      4,651       49.05      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      9,483      100.00
+{txt}
+{com}. global set1 c_delivery_age_mum c_delivery_age_mum_2 region_1 region_2 region_3 region_4 region_5 region_6 region_7 region_8 region_9 region_10 c_mumsmoked c_abnormal_gest sex_2 c_birthweight
+{txt}
+{com}. 
+. * ------------------------------------------------------------------------------
+. * Restrict to the single 2016 (age 46) wave to avoid the repeated-observations
+. * problem described above. panel_labour_outcomes.dta has one row per bcsid per
+. * wave; we keep only wave==2016 before merging, so the merge below is 1:1, not
+. * 1:m, and every row in the working dataset is one person.
+. * ------------------------------------------------------------------------------
+. preserve
+{txt}
+{com}.     use "/Users/user/Documents/datasets/britCohortStudy70/temporary_files/panel_labour_outcomes.dta", clear
+{txt}
+{com}.     keep if wave == 2016
+{txt}(55,797 observations deleted)
+
+{com}.     tempfile labour_age46
+{txt}
+{com}.     save `labour_age46'
+{txt}{p 0 4 2}
+file {bf}
+/var/folders/y4/1szv00wn4rx7db3rjjsg2dwc0000gp/T//S_22122.000002{rm}
+saved
+as .dta format
+{p_end}
+
+{com}. restore
+{txt}
+{com}. 
+. merge 1:1 bcsid using `labour_age46'
+{res}{txt}(label {bf:{txt}B10VOTEWO2} already defined)
+(label {bf:{txt}B10VOTE02} already defined)
+(label {bf:{txt}B10VOTEWO1} already defined)
+(label {bf:{txt}B10VOTE01} already defined)
+(label {bf:{txt}vote97} already defined)
+(label {bf:{txt}votewho} already defined)
+(label {bf:{txt}politint} already defined)
+(label {bf:{txt}b11q25t} already defined)
+(label {bf:{txt}b11q25s} already defined)
+(label {bf:{txt}b11q25r} already defined)
+(label {bf:{txt}b11q25q} already defined)
+(label {bf:{txt}b11q25p} already defined)
+(label {bf:{txt}b11q25o} already defined)
+(label {bf:{txt}b11q25n} already defined)
+(label {bf:{txt}b11q25m} already defined)
+(label {bf:{txt}b11q25l} already defined)
+(label {bf:{txt}b11q25k} already defined)
+(label {bf:{txt}b11q25j} already defined)
+(label {bf:{txt}b11q25i} already defined)
+(label {bf:{txt}b11q25h} already defined)
+(label {bf:{txt}b11q25g} already defined)
+(label {bf:{txt}b11q25f} already defined)
+(label {bf:{txt}b11q25e} already defined)
+(label {bf:{txt}b11q25d} already defined)
+(label {bf:{txt}b11q25c} already defined)
+(label {bf:{txt}b11q25b} already defined)
+(label {bf:{txt}b11q25a} already defined)
+(label {bf:{txt}b11voteeuway} already defined)
+(label {bf:{txt}b11voteeu} already defined)
+(label {bf:{txt}b11votewho4} already defined)
+(label {bf:{txt}b11vote04} already defined)
+(label {bf:{txt}b11polint} already defined)
+(label {bf:{txt}b11cflisd} already defined)
+(label {bf:{txt}b11cfrc} already defined)
+(label {bf:{txt}b11cftot} already defined)
+(label {bf:{txt}b11cfmis} already defined)
+(label {bf:{txt}b11cfcor} already defined)
+(label {bf:{txt}b11cfani} already defined)
+(label {bf:{txt}b11cflisn} already defined)
+(label {bf:{txt}b11netw} already defined)
+(label {bf:{txt}b11econact2} already defined)
+
+{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}           7,376
+{txt}{col 9}from master{col 30}{res}           4,140{txt}  (_merge==1)
+{col 9}from using{col 30}{res}           3,236{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}           5,344{txt}  (_merge==3)
+{col 5}{hline 41}
+
+{com}. drop if _merge == 2
+{txt}(3,236 observations deleted)
+
+{com}. drop _merge
+{txt}
+{com}. 
+. * ------------------------------------------------------------------------------
+. * Full control list for this exercise.
+. * ------------------------------------------------------------------------------
+. global cogcontrols perserverance_2_sd $set1 $set2 $set3 $set4 $set5 $set6 $set7
+{txt}
+{com}. 
+. 
+. 
+. * --- Profile plots for employedFT ---
+. sensitivity_profile employedFT pc1 $cogcontrols, model(logit) ///
+>     rhoy(0.1) ngrid(201) saving(profile_empFT_ry01) replace
+
+{txt}{hline 70}
+SENSITIVITY PROFILE: logit
+{hline 70}
+Treatment: pc1
+Outcome:   employedFT
+Controls:   perserverance_2_sd c_delivery_age_mum c_delivery_age_mum_2 region_1 region_2 region_3 region_4 region_5 region_6 region_7 region_8 region_9 region_10 c_mumsmoked c_abnormal_gest sex_2 c_birthweight c_stayedEd_mum c_stayedEd_dad c_parity c_prevDeathUnder7 c_prevDeathAfter7 c_prevStillbirth c_prevMiscarries c_breastfed c_inpatientAt5 c_hearSeeSpeak_issueAt5 c_childReadAt_5 c_mum_nonqual c_mum_secondary c_mum_degree c_dad_nonqual c_dad_secondary c_dad_degree c_mumWorksFTAt5 c_mumWorksPTAt5 c_nonwhite c_noSiblingsAt5 c_childHhldAt10 c_inpatientBefore10 c_fatherUnemployed10 c_fatherStayhome10 c_motherUnemployed10 c_motherStayhome10 c_benefit c_incband1 c_incband2 c_incband3 c_incband4 c_incband5 c_incband6 c_incband7 c_accTenureAt101 c_accTenureAt102 c_accTenureAt103 c_accTenureAt104 c_accTenureAt105 c_accTenureAt106 c_accTenureAt107 c_roomNumAt10 c_motherSmokesat10 c_fatherSmokesat10 c_eyesightIssue10 c_hearingIssue10 c_speechIssue10 c_heightAt10_sd c_weightAt10_sd c_disengagedAt10 pcB pcD pcE pcF pcG pcH
+Fixed rho_Y =  0.100
+Grid points: 201
+Confidence level: 95%
+
+Short model AME:    0.0233 (SE:  0.0054)
+r = cor(D_resid, Y_resid) =  0.0017
+t_short =    4.35
+Feasible rho_D range: [-0.985,  0.985]
+
+Evaluating 201 grid points...
+  ... 50 / 201 done
+  ... 100 / 201 done
+  ... 150 / 201 done
+  ... 200 / 201 done
+  Done. Successful: 201 / 201
+{res}{txt}{p 0 4 2}
+file {bf}
+/Users/user/Library/CloudStorage/Dropbox/Econometrics/politicalBehaviour/profile_empFT_ry01_combined.png{rm}
+saved as
+PNG
+format
+{p_end}
+{p 0 4 2}
+file {bf}
+/Users/user/Library/CloudStorage/Dropbox/Econometrics/politicalBehaviour/profile_empFT_ry01_ame.png{rm}
+saved as
+PNG
+format
+{p_end}
+{p 0 4 2}
+file {bf}
+/Users/user/Library/CloudStorage/Dropbox/Econometrics/politicalBehaviour/profile_empFT_ry01_tstat.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+Graphs saved to profile_empFT_ry01_combined.png, profile_empFT_ry01_ame.png, profile_empFT_ry01_tstat.png
+Data saved to profile_empFT_ry01_data.dta
+
+{hline 70}
+THRESHOLD CROSSINGS DETECTED
+{hline 70}
+  Explain-away crossing #1 at rho_D ~  0.3302
+  Explain-away crossing #2 at rho_D ~  0.6454
+  Sign-change crossing #1 at rho_D ~  0.5173
+{hline 70}
+
+{com}. 
+. sensitivity_profile employedFT pc1 $cogcontrols, model(logit) ///
+>     rhoy(0.3) ngrid(201) saving(profile_empFT_ry03) replace
+
+{txt}{hline 70}
+SENSITIVITY PROFILE: logit
+{hline 70}
+Treatment: pc1
+Outcome:   employedFT
+Controls:   perserverance_2_sd c_delivery_age_mum c_delivery_age_mum_2 region_1 region_2 region_3 region_4 region_5 region_6 region_7 region_8 region_9 region_10 c_mumsmoked c_abnormal_gest sex_2 c_birthweight c_stayedEd_mum c_stayedEd_dad c_parity c_prevDeathUnder7 c_prevDeathAfter7 c_prevStillbirth c_prevMiscarries c_breastfed c_inpatientAt5 c_hearSeeSpeak_issueAt5 c_childReadAt_5 c_mum_nonqual c_mum_secondary c_mum_degree c_dad_nonqual c_dad_secondary c_dad_degree c_mumWorksFTAt5 c_mumWorksPTAt5 c_nonwhite c_noSiblingsAt5 c_childHhldAt10 c_inpatientBefore10 c_fatherUnemployed10 c_fatherStayhome10 c_motherUnemployed10 c_motherStayhome10 c_benefit c_incband1 c_incband2 c_incband3 c_incband4 c_incband5 c_incband6 c_incband7 c_accTenureAt101 c_accTenureAt102 c_accTenureAt103 c_accTenureAt104 c_accTenureAt105 c_accTenureAt106 c_accTenureAt107 c_roomNumAt10 c_motherSmokesat10 c_fatherSmokesat10 c_eyesightIssue10 c_hearingIssue10 c_speechIssue10 c_heightAt10_sd c_weightAt10_sd c_disengagedAt10 pcB pcD pcE pcF pcG pcH
+Fixed rho_Y =  0.300
+Grid points: 201
+Confidence level: 95%
+
+Short model AME:    0.0233 (SE:  0.0054)
+r = cor(D_resid, Y_resid) =  0.0017
+t_short =    4.35
+Feasible rho_D range: [-0.944,  0.945]
+
+Evaluating 201 grid points...
+  ... 50 / 201 done
+  ... 100 / 201 done
+  ... 150 / 201 done
+  ... 200 / 201 done
+  Done. Successful: 200 / 201
+  Failed evaluations: 1
+{res}{txt}{p 0 4 2}
+file {bf}
+/Users/user/Library/CloudStorage/Dropbox/Econometrics/politicalBehaviour/profile_empFT_ry03_combined.png{rm}
+saved as
+PNG
+format
+{p_end}
+{p 0 4 2}
+file {bf}
+/Users/user/Library/CloudStorage/Dropbox/Econometrics/politicalBehaviour/profile_empFT_ry03_ame.png{rm}
+saved as
+PNG
+format
+{p_end}
+{p 0 4 2}
+file {bf}
+/Users/user/Library/CloudStorage/Dropbox/Econometrics/politicalBehaviour/profile_empFT_ry03_tstat.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+Graphs saved to profile_empFT_ry03_combined.png, profile_empFT_ry03_ame.png, profile_empFT_ry03_tstat.png
+Data saved to profile_empFT_ry03_data.dta
+
+{hline 70}
+THRESHOLD CROSSINGS DETECTED
+{hline 70}
+  Explain-away crossing #1 at rho_D ~  0.1469
+  Explain-away crossing #2 at rho_D ~  0.3263
+  Sign-change crossing #1 at rho_D ~  0.2413
+{hline 70}
+
+{com}. 
+. * --- Profile plots for isManagerSupervisor ---
+. sensitivity_profile isManagerSupervisor pc1 $cogcontrols, model(logit) ///
+>     rhoy(0.1) ngrid(201) saving(profile_mgr_ry01) replace
+
+{txt}{hline 70}
+SENSITIVITY PROFILE: logit
+{hline 70}
+Treatment: pc1
+Outcome:   isManagerSupervisor
+Controls:   perserverance_2_sd c_delivery_age_mum c_delivery_age_mum_2 region_1 region_2 region_3 region_4 region_5 region_6 region_7 region_8 region_9 region_10 c_mumsmoked c_abnormal_gest sex_2 c_birthweight c_stayedEd_mum c_stayedEd_dad c_parity c_prevDeathUnder7 c_prevDeathAfter7 c_prevStillbirth c_prevMiscarries c_breastfed c_inpatientAt5 c_hearSeeSpeak_issueAt5 c_childReadAt_5 c_mum_nonqual c_mum_secondary c_mum_degree c_dad_nonqual c_dad_secondary c_dad_degree c_mumWorksFTAt5 c_mumWorksPTAt5 c_nonwhite c_noSiblingsAt5 c_childHhldAt10 c_inpatientBefore10 c_fatherUnemployed10 c_fatherStayhome10 c_motherUnemployed10 c_motherStayhome10 c_benefit c_incband1 c_incband2 c_incband3 c_incband4 c_incband5 c_incband6 c_incband7 c_accTenureAt101 c_accTenureAt102 c_accTenureAt103 c_accTenureAt104 c_accTenureAt105 c_accTenureAt106 c_accTenureAt107 c_roomNumAt10 c_motherSmokesat10 c_fatherSmokesat10 c_eyesightIssue10 c_hearingIssue10 c_speechIssue10 c_heightAt10_sd c_weightAt10_sd c_disengagedAt10 pcB pcD pcE pcF pcG pcH
+Fixed rho_Y =  0.100
+Grid points: 201
+Confidence level: 95%
+
+Short model AME:    0.0266 (SE:  0.0075)
+r = cor(D_resid, Y_resid) = -0.0018
+t_short =    3.52
+Feasible rho_D range: [-0.985,  0.985]
+
+Evaluating 201 grid points...
+  ... 50 / 201 done
+  ... 100 / 201 done
+  ... 150 / 201 done
+  ... 200 / 201 done
+  Done. Successful: 201 / 201
+{res}{txt}{p 0 4 2}
+file {bf}
+/Users/user/Library/CloudStorage/Dropbox/Econometrics/politicalBehaviour/profile_mgr_ry01_combined.png{rm}
+saved as
+PNG
+format
+{p_end}
+{p 0 4 2}
+file {bf}
+/Users/user/Library/CloudStorage/Dropbox/Econometrics/politicalBehaviour/profile_mgr_ry01_ame.png{rm}
+saved as
+PNG
+format
+{p_end}
+{p 0 4 2}
+file {bf}
+/Users/user/Library/CloudStorage/Dropbox/Econometrics/politicalBehaviour/profile_mgr_ry01_tstat.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+Graphs saved to profile_mgr_ry01_combined.png, profile_mgr_ry01_ame.png, profile_mgr_ry01_tstat.png
+Data saved to profile_mgr_ry01_data.dta
+
+{hline 70}
+THRESHOLD CROSSINGS DETECTED
+{hline 70}
+  Explain-away crossing #1 at rho_D ~  0.2215
+  Explain-away crossing #2 at rho_D ~  0.6155
+  Sign-change crossing #1 at rho_D ~  0.4480
+{hline 70}
+
+{com}. 
+. sensitivity_profile isManagerSupervisor pc1 $cogcontrols, model(logit) ///
+>     rhoy(0.3) ngrid(201) saving(profile_mgr_ry03) replace
+
+{txt}{hline 70}
+SENSITIVITY PROFILE: logit
+{hline 70}
+Treatment: pc1
+Outcome:   isManagerSupervisor
+Controls:   perserverance_2_sd c_delivery_age_mum c_delivery_age_mum_2 region_1 region_2 region_3 region_4 region_5 region_6 region_7 region_8 region_9 region_10 c_mumsmoked c_abnormal_gest sex_2 c_birthweight c_stayedEd_mum c_stayedEd_dad c_parity c_prevDeathUnder7 c_prevDeathAfter7 c_prevStillbirth c_prevMiscarries c_breastfed c_inpatientAt5 c_hearSeeSpeak_issueAt5 c_childReadAt_5 c_mum_nonqual c_mum_secondary c_mum_degree c_dad_nonqual c_dad_secondary c_dad_degree c_mumWorksFTAt5 c_mumWorksPTAt5 c_nonwhite c_noSiblingsAt5 c_childHhldAt10 c_inpatientBefore10 c_fatherUnemployed10 c_fatherStayhome10 c_motherUnemployed10 c_motherStayhome10 c_benefit c_incband1 c_incband2 c_incband3 c_incband4 c_incband5 c_incband6 c_incband7 c_accTenureAt101 c_accTenureAt102 c_accTenureAt103 c_accTenureAt104 c_accTenureAt105 c_accTenureAt106 c_accTenureAt107 c_roomNumAt10 c_motherSmokesat10 c_fatherSmokesat10 c_eyesightIssue10 c_hearingIssue10 c_speechIssue10 c_heightAt10_sd c_weightAt10_sd c_disengagedAt10 pcB pcD pcE pcF pcG pcH
+Fixed rho_Y =  0.300
+Grid points: 201
+Confidence level: 95%
+
+Short model AME:    0.0266 (SE:  0.0075)
+r = cor(D_resid, Y_resid) = -0.0018
+t_short =    3.52
+Feasible rho_D range: [-0.945,  0.944]
+
+Evaluating 201 grid points...
+  ... 50 / 201 done
+  ... 100 / 201 done
+  ... 150 / 201 done
+  ... 200 / 201 done
+  Done. Successful: 200 / 201
+  Failed evaluations: 1
+{res}{txt}{p 0 4 2}
+file {bf}
+/Users/user/Library/CloudStorage/Dropbox/Econometrics/politicalBehaviour/profile_mgr_ry03_combined.png{rm}
+saved as
+PNG
+format
+{p_end}
+{p 0 4 2}
+file {bf}
+/Users/user/Library/CloudStorage/Dropbox/Econometrics/politicalBehaviour/profile_mgr_ry03_ame.png{rm}
+saved as
+PNG
+format
+{p_end}
+{p 0 4 2}
+file {bf}
+/Users/user/Library/CloudStorage/Dropbox/Econometrics/politicalBehaviour/profile_mgr_ry03_tstat.png{rm}
+saved as
+PNG
+format
+{p_end}
+
+Graphs saved to profile_mgr_ry03_combined.png, profile_mgr_ry03_ame.png, profile_mgr_ry03_tstat.png
+Data saved to profile_mgr_ry03_data.dta
+
+{hline 70}
+THRESHOLD CROSSINGS DETECTED
+{hline 70}
+  Explain-away crossing #1 at rho_D ~  0.0892
+  Explain-away crossing #2 at rho_D ~  0.2969
+  Sign-change crossing #1 at rho_D ~  0.1931
+{hline 70}
+
+{com}.         
+.         
+. * ------------------------------------------------------------------------------
+. * Run the sensitivity package for each binary labour-supply outcome at age 46.
+. * benchmark(c_mum_degree c_dad_degree): both already sit in $set3 (controls),
+. * so the package's leave-one-out logic (drop the variable from controls,
+. * measure its own (rho_D, rho_Y), evaluate the implied bias) applies directly,
+. * mirroring how motheduc/fatheduc were benchmarked in the Mroz application.
+. * ------------------------------------------------------------------------------
+. local outcomes employedFT  isManagerSupervisor
+{txt}
+{com}. 
+. foreach y of local outcomes {c -(}
+{txt}  2{com}. 
+.     di as text _n "{c -(}hline 70{c )-}"
+{txt}  3{com}.     di as text "COGNITIVE SKILLS (pc1) AND `y' AT AGE 46"
+{txt}  4{com}.     di as text "{c -(}hline 70{c )-}"
+{txt}  5{com}. 
+.     quietly count if !missing(`y', pc1)
+{txt}  6{com}.     di as text "Non-missing observations for this outcome: " r(N)
+{txt}  7{com}. 
+.     capture noisily sensitivity `y' pc1 $cogcontrols, model(logit)   ///
+>         rhod(-0.5 -0.4 -0.3 -0.2 -0.1 0 0.1 0.2 0.3 0.4 0.5)         ///
+>         rhoy(-0.5 -0.4 -0.3 -0.2 -0.1 0 0.1 0.2 0.3 0.4 0.5)         ///
+>         bisect signchange                                            ///
+>         benchmark( sex_2 c_motherStayhome10 c_fatherUnemployed10 pcB c_heightAt10_sd c_weightAt10_sd )
+{txt}  8{com}. 
+.     if _rc != 0 {c -(}
+{txt}  9{com}.         di as error "sensitivity failed for outcome `y' (rc=" _rc "). Likely"
+{txt} 10{com}.         di as error "causes: separation/perfect prediction in this subsample,"
+{txt} 11{com}.         di as error "or a control with zero variance after the wave restriction."
+{txt} 12{com}.         di as error "Check `y' and the control set before re-running."
+{txt} 13{com}.     {c )-}
+{txt} 14{com}. {c )-}
+
+{txt}{hline 70}
+COGNITIVE SKILLS (pc1) AND employedFT AT AGE 46
+{hline 70}
+Non-missing observations for this outcome: 5344
+
+{hline 70}
+SENSITIVITY ANALYSIS: logit (Version 18)
+{hline 70}
+Treatment: pc1
+Outcome:   employedFT
+Controls:   perserverance_2_sd c_delivery_age_mum c_delivery_age_mum_2 region_1 region_2 region_3 region_4 region_5 region_6 region_7 region_8 region_9 region_10 c_mumsmoked c_abnormal_gest sex_2 c_birthweight c_stayedEd_mum c_stayedEd_dad c_parity c_prevDeathUnder7 c_prevDeathAfter7 c_prevStillbirth c_prevMiscarries c_breastfed c_inpatientAt5 c_hearSeeSpeak_issueAt5 c_childReadAt_5 c_mum_nonqual c_mum_secondary c_mum_degree c_dad_nonqual c_dad_secondary c_dad_degree c_mumWorksFTAt5 c_mumWorksPTAt5 c_nonwhite c_noSiblingsAt5 c_childHhldAt10 c_inpatientBefore10 c_fatherUnemployed10 c_fatherStayhome10 c_motherUnemployed10 c_motherStayhome10 c_benefit c_incband1 c_incband2 c_incband3 c_incband4 c_incband5 c_incband6 c_incband7 c_accTenureAt101 c_accTenureAt102 c_accTenureAt103 c_accTenureAt104 c_accTenureAt105 c_accTenureAt106 c_accTenureAt107 c_roomNumAt10 c_motherSmokesat10 c_fatherSmokesat10 c_eyesightIssue10 c_hearingIssue10 c_speechIssue10 c_heightAt10_sd c_weightAt10_sd c_disengagedAt10 pcB pcD pcE pcF pcG pcH
+rho_D: -.5 -.4 -.3 -.2 -.1 0 .1 .2 .3 .4 .5
+rho_Y: -.5 -.4 -.3 -.2 -.1 0 .1 .2 .3 .4 .5
+Confidence level: 95%
+
+Short model ME:    0.0233 (SE:  0.0054)
+r = cor(D_resid, Y_resid) =  0.0017
+
+   rho_D   rho_Y        ME      SE              [95% CI]
+{hline 58}
+{res}   -0.50   -0.50   -0.0251  0.0053  [-0.0355,-0.0148]
+   -0.50   -0.40   -0.0200  0.0055  [-0.0307,-0.0093]
+   -0.50   -0.30   -0.0122  0.0057  [-0.0233,-0.0011]
+   -0.50   -0.20   -0.0018  0.0058  [-0.0133, 0.0096]
+   -0.50   -0.10    0.0107  0.0059  [-0.0009, 0.0223]
+   -0.50    0.00    0.0243  0.0059  [ 0.0127, 0.0360]
+   -0.50    0.10    0.0381  0.0059  [ 0.0266, 0.0496]
+   -0.50    0.20    0.0518  0.0058  [ 0.0405, 0.0631]
+   -0.50    0.30    0.0651  0.0056  [ 0.0542, 0.0760]
+   -0.50    0.40    0.0779  0.0053  [ 0.0675, 0.0882]
+   -0.50    0.50    0.0894  0.0049  [ 0.0797, 0.0990]
+   -0.40   -0.50   -0.0179  0.0051  [-0.0280,-0.0079]
+   -0.40   -0.40   -0.0138  0.0053  [-0.0243,-0.0034]
+   -0.40   -0.30   -0.0074  0.0055  [-0.0182, 0.0034]
+   -0.40   -0.20    0.0015  0.0057  [-0.0096, 0.0126]
+   -0.40   -0.10    0.0123  0.0058  [ 0.0010, 0.0235]
+   -0.40    0.00    0.0241  0.0058  [ 0.0128, 0.0354]
+   -0.40    0.10    0.0361  0.0057  [ 0.0249, 0.0473]
+   -0.40    0.20    0.0480  0.0056  [ 0.0370, 0.0590]
+   -0.40    0.30    0.0596  0.0054  [ 0.0490, 0.0702]
+   -0.40    0.40    0.0705  0.0051  [ 0.0605, 0.0806]
+   -0.40    0.50    0.0803  0.0048  [ 0.0709, 0.0896]
+   -0.30   -0.50   -0.0096  0.0050  [-0.0194, 0.0002]
+   -0.30   -0.40   -0.0065  0.0052  [-0.0166, 0.0037]
+   -0.30   -0.30   -0.0014  0.0054  [-0.0119, 0.0091]
+   -0.30   -0.20    0.0056  0.0055  [-0.0051, 0.0164]
+   -0.30   -0.10    0.0143  0.0056  [ 0.0034, 0.0253]
+   -0.30    0.00    0.0239  0.0056  [ 0.0129, 0.0349]
+   -0.30    0.10    0.0337  0.0056  [ 0.0228, 0.0446]
+   -0.30    0.20    0.0433  0.0054  [ 0.0326, 0.0539]
+   -0.30    0.30    0.0526  0.0053  [ 0.0423, 0.0629]
+   -0.30    0.40    0.0614  0.0050  [ 0.0516, 0.0712]
+   -0.30    0.50    0.0690  0.0046  [ 0.0600, 0.0781]
+   -0.20   -0.50   -0.0002  0.0049  [-0.0098, 0.0094]
+   -0.20   -0.40    0.0020  0.0051  [-0.0080, 0.0119]
+   -0.20   -0.30    0.0056  0.0052  [-0.0047, 0.0158]
+   -0.20   -0.20    0.0106  0.0054  [ 0.0001, 0.0211]
+   -0.20   -0.10    0.0168  0.0055  [ 0.0061, 0.0275]
+   -0.20    0.00    0.0237  0.0055  [ 0.0130, 0.0345]
+   -0.20    0.10    0.0307  0.0054  [ 0.0201, 0.0414]
+   -0.20    0.20    0.0376  0.0053  [ 0.0272, 0.0481]
+   -0.20    0.30    0.0443  0.0051  [ 0.0343, 0.0544]
+   -0.20    0.40    0.0506  0.0049  [ 0.0411, 0.0602]
+   -0.20    0.50    0.0560  0.0045  [ 0.0471, 0.0648]
+   -0.10   -0.50    0.0100  0.0048  [ 0.0005, 0.0195]
+   -0.10   -0.40    0.0112  0.0050  [ 0.0014, 0.0210]
+   -0.10   -0.30    0.0133  0.0052  [ 0.0032, 0.0234]
+   -0.10   -0.20    0.0161  0.0053  [ 0.0058, 0.0265]
+   -0.10   -0.10    0.0196  0.0054  [ 0.0091, 0.0302]
+   -0.10    0.00    0.0235  0.0054  [ 0.0130, 0.0341]
+   -0.10    0.10    0.0275  0.0054  [ 0.0170, 0.0380]
+   -0.10    0.20    0.0313  0.0053  [ 0.0210, 0.0416]
+   -0.10    0.30    0.0351  0.0051  [ 0.0251, 0.0450]
+   -0.10    0.40    0.0385  0.0048  [ 0.0291, 0.0480]
+   -0.10    0.50    0.0414  0.0045  [ 0.0327, 0.0502]
+    0.00   -0.50    0.0205  0.0048  [ 0.0111, 0.0299]
+    0.00   -0.40    0.0209  0.0050  [ 0.0112, 0.0306]
+    0.00   -0.30    0.0214  0.0051  [ 0.0114, 0.0314]
+    0.00   -0.20    0.0220  0.0052  [ 0.0117, 0.0323]
+    0.00   -0.10    0.0227  0.0053  [ 0.0122, 0.0331]
+    0.00    0.00    0.0233  0.0054  [ 0.0128, 0.0338]
+    0.00    0.10    0.0240  0.0053  [ 0.0136, 0.0344]
+    0.00    0.20    0.0246  0.0052  [ 0.0144, 0.0349]
+    0.00    0.30    0.0252  0.0051  [ 0.0153, 0.0351]
+    0.00    0.40    0.0258  0.0048  [ 0.0164, 0.0352]
+    0.00    0.50    0.0262  0.0044  [ 0.0175, 0.0349]
+    0.10   -0.50    0.0312  0.0048  [ 0.0218, 0.0406]
+    0.10   -0.40    0.0307  0.0050  [ 0.0210, 0.0404]
+    0.10   -0.30    0.0297  0.0051  [ 0.0197, 0.0397]
+    0.10   -0.20    0.0280  0.0052  [ 0.0177, 0.0383]
+    0.10   -0.10    0.0258  0.0053  [ 0.0153, 0.0362]
+    0.10    0.00    0.0231  0.0054  [ 0.0126, 0.0337]
+    0.10    0.10    0.0205  0.0053  [ 0.0100, 0.0310]
+    0.10    0.20    0.0178  0.0053  [ 0.0075, 0.0281]
+    0.10    0.30    0.0152  0.0051  [ 0.0053, 0.0252]
+    0.10    0.40    0.0128  0.0048  [ 0.0033, 0.0222]
+    0.10    0.50    0.0106  0.0045  [ 0.0019, 0.0194]
+    0.20   -0.50    0.0423  0.0048  [ 0.0329, 0.0517]
+    0.20   -0.40    0.0410  0.0050  [ 0.0312, 0.0507]
+    0.20   -0.30    0.0384  0.0051  [ 0.0283, 0.0485]
+    0.20   -0.20    0.0344  0.0053  [ 0.0240, 0.0447]
+    0.20   -0.10    0.0290  0.0054  [ 0.0184, 0.0396]
+    0.20    0.00    0.0230  0.0054  [ 0.0123, 0.0336]
+    0.20    0.10    0.0168  0.0054  [ 0.0061, 0.0274]
+    0.20    0.20    0.0106  0.0053  [ 0.0002, 0.0211]
+    0.20    0.30    0.0046  0.0051  [-0.0055, 0.0147]
+    0.20    0.40   -0.0010  0.0049  [-0.0105, 0.0086]
+    0.20    0.50   -0.0057  0.0045  [-0.0145, 0.0031]
+    0.30   -0.50    0.0542  0.0048  [ 0.0448, 0.0637]
+    0.30   -0.40    0.0522  0.0050  [ 0.0424, 0.0620]
+    0.30   -0.30    0.0480  0.0052  [ 0.0378, 0.0583]
+    0.30   -0.20    0.0415  0.0054  [ 0.0309, 0.0521]
+    0.30   -0.10    0.0328  0.0055  [ 0.0219, 0.0436]
+    0.30    0.00    0.0228  0.0056  [ 0.0118, 0.0337]
+    0.30    0.10    0.0126  0.0056  [ 0.0017, 0.0235]
+    0.30    0.20    0.0025  0.0055  [-0.0082, 0.0132]
+    0.30    0.30   -0.0073  0.0053  [-0.0176, 0.0030]
+    0.30    0.40   -0.0163  0.0049  [-0.0260,-0.0067]
+    0.30    0.50   -0.0238  0.0045  [-0.0326,-0.0150]
+    0.40   -0.50    0.0677  0.0049  [ 0.0581, 0.0772]
+    0.40   -0.40    0.0651  0.0051  [ 0.0551, 0.0750]
+    0.40   -0.30    0.0593  0.0053  [ 0.0488, 0.0698]
+    0.40   -0.20    0.0500  0.0056  [ 0.0390, 0.0609]
+    0.40   -0.10    0.0373  0.0057  [ 0.0260, 0.0485]
+    0.40    0.00    0.0226  0.0058  [ 0.0112, 0.0340]
+    0.40    0.10    0.0076  0.0058  [-0.0038, 0.0190]
+    0.40    0.20   -0.0072  0.0057  [-0.0183, 0.0039]
+    0.40    0.30   -0.0215  0.0054  [-0.0322,-0.0109]
+    0.40    0.40   -0.0346  0.0050  [-0.0445,-0.0247]
+    0.40    0.50   -0.0449  0.0045  [-0.0538,-0.0360]
+    0.50   -0.50    0.0833  0.0049  [ 0.0737, 0.0930]
+    0.50   -0.40    0.0805  0.0052  [ 0.0703, 0.0907]
+    0.50   -0.30    0.0733  0.0055  [ 0.0625, 0.0841]
+    0.50   -0.20    0.0608  0.0058  [ 0.0494, 0.0722]
+    0.50   -0.10    0.0431  0.0061  [ 0.0313, 0.0550]
+    0.50    0.00    0.0224  0.0062  [ 0.0103, 0.0345]
+    0.50    0.10    0.0012  0.0061  [-0.0109, 0.0132]
+    0.50    0.20   -0.0198  0.0060  [-0.0315,-0.0081]
+    0.50    0.30   -0.0399  0.0057  [-0.0510,-0.0288]
+    0.50    0.40   -0.0577  0.0052  [-0.0679,-0.0476]
+    0.50    0.50   -0.0707  0.0045  [-0.0795,-0.0619]
+{txt}{hline 58}
+
+SENSITIVITY INTERVAL
+  [ -0.0707,    0.0894]
+
+{hline 80}
+BISECTION (explain away): smallest rho_d* that drives AME to insignificance
+Criterion: |ME/SE| < 1.960
+{hline 80}
+     rho_Y        rho_d*  ME at rho_d*    t-stat      status
+{hline 80}
+{res}   -0.5000       -0.1044        0.0095    1.9593   converged
+   -0.4000       -0.1147        0.0098    1.9599   converged
+   -0.3000       -0.1394        0.0102    1.9597   converged
+   -0.2000       -0.2009        0.0105    1.9600   converged
+   -0.1000       -0.4488        0.0114    1.9599   converged
+    0.0000        0.8709        0.0216    1.9601   converged
+    0.1000        0.3333        0.0110    1.9599   converged
+    0.2000        0.2023        0.0104    1.9601   converged
+    0.3000        0.1502        0.0100    1.9606   converged
+    0.4000        0.1247        0.0095    1.9606   converged
+    0.5000        0.1119        0.0087    1.9593   converged
+{txt}{hline 80}
+'robust' = effect remains significant across entire feasible range
+
+{hline 80}
+BISECTION (sign change, Masten & Poirier 2025):
+  Smallest rho_d+ such that sign(AME) reverses
+  Short-model AME =    0.0233  (sign +1)
+{hline 80}
+     rho_Y        rho_d+  ME at rho_d+    t-stat      status
+{hline 80}
+{res}   -0.5000       -0.1981       -0.0000   -0.0002   converged
+   -0.4000       -0.2225       -0.0000   -0.0003   converged
+   -0.3000       -0.2788        0.0000    0.0004   converged
+   -0.2000       -0.4415       -0.0000   -0.0001   converged
+   -0.1000             .        0.0081    1.2158      robust
+    0.0000             .        0.0907    1.2795      robust
+    0.1000        0.5152        0.0000    0.0005   converged
+    0.2000        0.3280       -0.0000   -0.0000   converged
+    0.3000        0.2406       -0.0000   -0.0006   converged
+    0.4000        0.1932       -0.0000   -0.0001   converged
+    0.5000        0.1659       -0.0000   -0.0002   converged
+{txt}{hline 80}
+'robust' = sign never flips across entire feasible range
+
+NOTE (Masten & Poirier 2025): sign-change point may be
+smaller than explain-away point. Report both.
+
+{hline 80}
+BENCHMARK ANALYSIS: sensitivity at observed-covariate strength
+{hline 80}
+      variable     rho_D     rho_Y          ME        SE    t-stat      bias  feasible
+{hline 80}
+         {res}sex_2   -0.0736   -0.3987      0.0138    0.0050    2.7570    0.0095  feasible
+c_motherStayhome10   -0.0092   -0.0317      0.0230    0.0054    4.3035    0.0003  feasible
+c_fatherUnemployed10   -0.0119    0.0489      0.0239    0.0053    4.4631   -0.0006  feasible
+           pcB    0.1680    0.0036      0.0228    0.0054    4.2134    0.0005  feasible
+c_heightAt10_sd    0.1339    0.0264      0.0221    0.0054    4.0923    0.0012  feasible
+c_weightAt10_sd    0.0822   -0.0300      0.0238    0.0054    4.4376   -0.0005  feasible
+{txt}{hline 80}
+Interpretation: 'bias' = ME_short - ME_adjusted;
+  if a confounder as strong as this variable were omitted,
+  the short-model AME would shift by this amount.
+
+{hline 70}
+COGNITIVE SKILLS (pc1) AND isManagerSupervisor AT AGE 46
+{hline 70}
+Non-missing observations for this outcome: 3615
+
+{hline 70}
+SENSITIVITY ANALYSIS: logit (Version 18)
+{hline 70}
+Treatment: pc1
+Outcome:   isManagerSupervisor
+Controls:   perserverance_2_sd c_delivery_age_mum c_delivery_age_mum_2 region_1 region_2 region_3 region_4 region_5 region_6 region_7 region_8 region_9 region_10 c_mumsmoked c_abnormal_gest sex_2 c_birthweight c_stayedEd_mum c_stayedEd_dad c_parity c_prevDeathUnder7 c_prevDeathAfter7 c_prevStillbirth c_prevMiscarries c_breastfed c_inpatientAt5 c_hearSeeSpeak_issueAt5 c_childReadAt_5 c_mum_nonqual c_mum_secondary c_mum_degree c_dad_nonqual c_dad_secondary c_dad_degree c_mumWorksFTAt5 c_mumWorksPTAt5 c_nonwhite c_noSiblingsAt5 c_childHhldAt10 c_inpatientBefore10 c_fatherUnemployed10 c_fatherStayhome10 c_motherUnemployed10 c_motherStayhome10 c_benefit c_incband1 c_incband2 c_incband3 c_incband4 c_incband5 c_incband6 c_incband7 c_accTenureAt101 c_accTenureAt102 c_accTenureAt103 c_accTenureAt104 c_accTenureAt105 c_accTenureAt106 c_accTenureAt107 c_roomNumAt10 c_motherSmokesat10 c_fatherSmokesat10 c_eyesightIssue10 c_hearingIssue10 c_speechIssue10 c_heightAt10_sd c_weightAt10_sd c_disengagedAt10 pcB pcD pcE pcF pcG pcH
+rho_D: -.5 -.4 -.3 -.2 -.1 0 .1 .2 .3 .4 .5
+rho_Y: -.5 -.4 -.3 -.2 -.1 0 .1 .2 .3 .4 .5
+Confidence level: 95%
+
+Short model ME:    0.0266 (SE:  0.0075)
+r = cor(D_resid, Y_resid) = -0.0018
+
+   rho_D   rho_Y        ME      SE              [95% CI]
+{hline 58}
+{res}   -0.50   -0.50   -0.0228  0.0075  [-0.0375,-0.0081]
+   -0.50   -0.40   -0.0169  0.0077  [-0.0320,-0.0018]
+   -0.50   -0.30   -0.0084  0.0079  [-0.0240, 0.0072]
+   -0.50   -0.20    0.0026  0.0081  [-0.0133, 0.0186]
+   -0.50   -0.10    0.0158  0.0082  [-0.0003, 0.0319]
+   -0.50    0.00    0.0301  0.0082  [ 0.0140, 0.0462]
+   -0.50    0.10    0.0445  0.0081  [ 0.0286, 0.0604]
+   -0.50    0.20    0.0587  0.0079  [ 0.0432, 0.0743]
+   -0.50    0.30    0.0729  0.0077  [ 0.0579, 0.0879]
+   -0.50    0.40    0.0869  0.0073  [ 0.0726, 0.1013]
+   -0.50    0.50    0.1004  0.0069  [ 0.0869, 0.1138]
+   -0.40   -0.50   -0.0148  0.0073  [-0.0291,-0.0004]
+   -0.40   -0.40   -0.0101  0.0075  [-0.0249, 0.0047]
+   -0.40   -0.30   -0.0031  0.0077  [-0.0183, 0.0120]
+   -0.40   -0.20    0.0061  0.0079  [-0.0094, 0.0216]
+   -0.40   -0.10    0.0173  0.0080  [ 0.0016, 0.0330]
+   -0.40    0.00    0.0295  0.0080  [ 0.0138, 0.0452]
+   -0.40    0.10    0.0417  0.0079  [ 0.0262, 0.0572]
+   -0.40    0.20    0.0539  0.0077  [ 0.0388, 0.0691]
+   -0.40    0.30    0.0661  0.0075  [ 0.0514, 0.0807]
+   -0.40    0.40    0.0780  0.0071  [ 0.0641, 0.0920]
+   -0.40    0.50    0.0894  0.0067  [ 0.0763, 0.1025]
+   -0.30   -0.50   -0.0054  0.0072  [-0.0194, 0.0087]
+   -0.30   -0.40   -0.0019  0.0074  [-0.0164, 0.0125]
+   -0.30   -0.30    0.0033  0.0076  [-0.0115, 0.0182]
+   -0.30   -0.20    0.0105  0.0077  [-0.0046, 0.0256]
+   -0.30   -0.10    0.0192  0.0078  [ 0.0039, 0.0346]
+   -0.30    0.00    0.0288  0.0078  [ 0.0135, 0.0441]
+   -0.30    0.10    0.0384  0.0077  [ 0.0233, 0.0536]
+   -0.30    0.20    0.0480  0.0076  [ 0.0332, 0.0628]
+   -0.30    0.30    0.0576  0.0073  [ 0.0432, 0.0719]
+   -0.30    0.40    0.0670  0.0070  [ 0.0534, 0.0807]
+   -0.30    0.50    0.0759  0.0065  [ 0.0632, 0.0887]
+   -0.20   -0.50    0.0052  0.0070  [-0.0086, 0.0190]
+   -0.20   -0.40    0.0074  0.0072  [-0.0068, 0.0216]
+   -0.20   -0.30    0.0109  0.0074  [-0.0036, 0.0255]
+   -0.20   -0.20    0.0157  0.0076  [ 0.0009, 0.0305]
+   -0.20   -0.10    0.0216  0.0077  [ 0.0066, 0.0366]
+   -0.20    0.00    0.0281  0.0077  [ 0.0130, 0.0431]
+   -0.20    0.10    0.0345  0.0076  [ 0.0197, 0.0494]
+   -0.20    0.20    0.0410  0.0074  [ 0.0264, 0.0556]
+   -0.20    0.30    0.0475  0.0072  [ 0.0334, 0.0616]
+   -0.20    0.40    0.0540  0.0069  [ 0.0406, 0.0675]
+   -0.20    0.50    0.0601  0.0064  [ 0.0476, 0.0727]
+   -0.10   -0.50    0.0167  0.0070  [ 0.0030, 0.0303]
+   -0.10   -0.40    0.0177  0.0071  [ 0.0037, 0.0317]
+   -0.10   -0.30    0.0193  0.0073  [ 0.0050, 0.0337]
+   -0.10   -0.20    0.0215  0.0075  [ 0.0069, 0.0362]
+   -0.10   -0.10    0.0243  0.0076  [ 0.0095, 0.0391]
+   -0.10    0.00    0.0272  0.0076  [ 0.0124, 0.0421]
+   -0.10    0.10    0.0302  0.0075  [ 0.0155, 0.0449]
+   -0.10    0.20    0.0332  0.0074  [ 0.0188, 0.0476]
+   -0.10    0.30    0.0363  0.0071  [ 0.0224, 0.0503]
+   -0.10    0.40    0.0395  0.0068  [ 0.0262, 0.0529]
+   -0.10    0.50    0.0425  0.0064  [ 0.0301, 0.0550]
+    0.00   -0.50    0.0286  0.0069  [ 0.0151, 0.0422]
+    0.00   -0.40    0.0285  0.0071  [ 0.0145, 0.0424]
+    0.00   -0.30    0.0282  0.0073  [ 0.0139, 0.0424]
+    0.00   -0.20    0.0277  0.0074  [ 0.0131, 0.0423]
+    0.00   -0.10    0.0271  0.0075  [ 0.0124, 0.0419]
+    0.00    0.00    0.0264  0.0075  [ 0.0116, 0.0412]
+    0.00    0.10    0.0256  0.0075  [ 0.0110, 0.0403]
+    0.00    0.20    0.0250  0.0074  [ 0.0105, 0.0394]
+    0.00    0.30    0.0245  0.0071  [ 0.0105, 0.0384]
+    0.00    0.40    0.0242  0.0068  [ 0.0109, 0.0375]
+    0.00    0.50    0.0240  0.0064  [ 0.0115, 0.0364]
+    0.10   -0.50    0.0408  0.0069  [ 0.0272, 0.0543]
+    0.10   -0.40    0.0394  0.0071  [ 0.0255, 0.0533]
+    0.10   -0.30    0.0371  0.0073  [ 0.0228, 0.0514]
+    0.10   -0.20    0.0340  0.0075  [ 0.0194, 0.0486]
+    0.10   -0.10    0.0300  0.0076  [ 0.0152, 0.0448]
+    0.10    0.00    0.0255  0.0076  [ 0.0106, 0.0404]
+    0.10    0.10    0.0210  0.0076  [ 0.0062, 0.0358]
+    0.10    0.20    0.0165  0.0074  [ 0.0020, 0.0311]
+    0.10    0.30    0.0124  0.0072  [-0.0017, 0.0265]
+    0.10    0.40    0.0086  0.0069  [-0.0049, 0.0220]
+    0.10    0.50    0.0051  0.0064  [-0.0075, 0.0176]
+    0.20   -0.50    0.0534  0.0069  [ 0.0398, 0.0670]
+    0.20   -0.40    0.0508  0.0071  [ 0.0368, 0.0648]
+    0.20   -0.30    0.0466  0.0074  [ 0.0322, 0.0611]
+    0.20   -0.20    0.0406  0.0076  [ 0.0258, 0.0555]
+    0.20   -0.10    0.0331  0.0077  [ 0.0180, 0.0482]
+    0.20    0.00    0.0246  0.0077  [ 0.0094, 0.0398]
+    0.20    0.10    0.0160  0.0077  [ 0.0009, 0.0311]
+    0.20    0.20    0.0076  0.0075  [-0.0072, 0.0224]
+    0.20    0.30   -0.0005  0.0073  [-0.0148, 0.0138]
+    0.20    0.40   -0.0080  0.0069  [-0.0216, 0.0056]
+    0.20    0.50   -0.0149  0.0064  [-0.0276,-0.0023]
+    0.30   -0.50    0.0671  0.0070  [ 0.0535, 0.0808]
+    0.30   -0.40    0.0634  0.0072  [ 0.0493, 0.0776]
+    0.30   -0.30    0.0572  0.0075  [ 0.0425, 0.0719]
+    0.30   -0.20    0.0482  0.0077  [ 0.0330, 0.0633]
+    0.30   -0.10    0.0366  0.0079  [ 0.0211, 0.0521]
+    0.30    0.00    0.0236  0.0080  [ 0.0080, 0.0393]
+    0.30    0.10    0.0105  0.0079  [-0.0051, 0.0260]
+    0.30    0.20   -0.0025  0.0078  [-0.0177, 0.0127]
+    0.30    0.30   -0.0149  0.0075  [-0.0295,-0.0003]
+    0.30    0.40   -0.0266  0.0070  [-0.0404,-0.0128]
+    0.30    0.50   -0.0373  0.0065  [-0.0500,-0.0245]
+    0.40   -0.50    0.0827  0.0070  [ 0.0689, 0.0965]
+    0.40   -0.40    0.0780  0.0073  [ 0.0636, 0.0924]
+    0.40   -0.30    0.0697  0.0077  [ 0.0546, 0.0847]
+    0.40   -0.20    0.0572  0.0080  [ 0.0416, 0.0729]
+    0.40   -0.10    0.0410  0.0082  [ 0.0249, 0.0571]
+    0.40    0.00    0.0225  0.0083  [ 0.0062, 0.0388]
+    0.40    0.10    0.0038  0.0083  [-0.0124, 0.0200]
+    0.40    0.20   -0.0145  0.0081  [-0.0303, 0.0013]
+    0.40    0.30   -0.0322  0.0077  [-0.0473,-0.0171]
+    0.40    0.40   -0.0489  0.0072  [-0.0630,-0.0348]
+    0.40    0.50   -0.0638  0.0065  [-0.0766,-0.0509]
+    0.50   -0.50    0.1012  0.0071  [ 0.0872, 0.1151]
+    0.50   -0.40    0.0958  0.0075  [ 0.0811, 0.1105]
+    0.50   -0.30    0.0853  0.0079  [ 0.0698, 0.1009]
+    0.50   -0.20    0.0688  0.0084  [ 0.0525, 0.0852]
+    0.50   -0.10    0.0467  0.0087  [ 0.0297, 0.0637]
+    0.50    0.00    0.0212  0.0088  [ 0.0039, 0.0385]
+    0.50    0.10   -0.0047  0.0087  [-0.0218, 0.0125]
+    0.50    0.20   -0.0301  0.0085  [-0.0467,-0.0134]
+    0.50    0.30   -0.0545  0.0080  [-0.0702,-0.0388]
+    0.50    0.40   -0.0773  0.0074  [-0.0917,-0.0629]
+    0.50    0.50   -0.0971  0.0065  [-0.1099,-0.0843]
+{txt}{hline 58}
+
+SENSITIVITY INTERVAL
+  [ -0.0971,    0.1012]
+
+{hline 80}
+BISECTION (explain away): smallest rho_d* that drives AME to insignificance
+Criterion: |ME/SE| < 1.960
+{hline 80}
+     rho_Y        rho_d*  ME at rho_d*    t-stat      status
+{hline 80}
+{res}   -0.5000       -0.1256        0.0137    1.9605   converged
+   -0.4000       -0.1347        0.0141    1.9598   converged
+   -0.3000       -0.1570        0.0144    1.9597   converged
+   -0.2000       -0.2152        0.0149    1.9601   converged
+   -0.1000       -0.4840        0.0160    1.9599   converged
+    0.0000        0.6213        0.0192    1.9599   converged
+    0.1000        0.2168        0.0151    1.9600   converged
+    0.2000        0.1227        0.0146    1.9600   converged
+    0.3000        0.0863        0.0141    1.9598   converged
+    0.4000        0.0695        0.0134    1.9600   converged
+    0.5000        0.0610        0.0125    1.9605   converged
+{txt}{hline 80}
+'robust' = effect remains significant across entire feasible range
+
+{hline 80}
+BISECTION (sign change, Masten & Poirier 2025):
+  Smallest rho_d+ such that sign(AME) reverses
+  Short-model AME =    0.0266  (sign +1)
+{hline 80}
+     rho_Y        rho_d+  ME at rho_d+    t-stat      status
+{hline 80}
+{res}   -0.5000       -0.2479       -0.0000   -0.0004   converged
+   -0.4000       -0.2784       -0.0000   -0.0002   converged
+   -0.3000       -0.3492        0.0000    0.0002   converged
+   -0.2000       -0.6027       -0.0000   -0.0000   converged
+   -0.1000             .        0.0139    1.5148      robust
+    0.0000        0.9314       -0.0000   -0.0004   converged
+    0.1000        0.4486        0.0000    0.0001   converged
+    0.2000        0.2770       -0.0000   -0.0005   converged
+    0.3000        0.1965        0.0000    0.0006   converged
+    0.4000        0.1527        0.0000    0.0007   converged
+    0.5000        0.1262       -0.0000   -0.0003   converged
+{txt}{hline 80}
+'robust' = sign never flips across entire feasible range
+
+NOTE (Masten & Poirier 2025): sign-change point may be
+smaller than explain-away point. Report both.
+
+{hline 80}
+BENCHMARK ANALYSIS: sensitivity at observed-covariate strength
+{hline 80}
+      variable     rho_D     rho_Y          ME        SE    t-stat      bias  feasible
+{hline 80}
+         {res}sex_2   -0.0947   -0.1301      0.0236    0.0075    3.1354    0.0030  feasible
+c_motherStayhome10   -0.0059   -0.0233      0.0266    0.0075    3.5197   -0.0000  feasible
+c_fatherUnemployed10   -0.0083    0.0376      0.0263    0.0075    3.4903    0.0003  feasible
+           pcB    0.1610    0.0689      0.0202    0.0077    2.6341    0.0064  feasible
+c_heightAt10_sd    0.1146    0.0634      0.0221    0.0076    2.9143    0.0044  feasible
+c_weightAt10_sd    0.1055   -0.0448      0.0276    0.0076    3.6312   -0.0010  feasible
+{txt}{hline 80}
+Interpretation: 'bias' = ME_short - ME_adjusted;
+  if a confounder as strong as this variable were omitted,
+  the short-model AME would shift by this amount.
+
+{com}. 
+. logit employedFT  pc1 $cogcontrols
+
+{txt}note: {bf:region_10} omitted because of collinearity.
+note: {bf:c_incband7} omitted because of collinearity.
+note: {bf:c_accTenureAt107} omitted because of collinearity.
+{res}{txt}Iteration 0:{space 2}Log likelihood = {res:-2250.5427}  
+Iteration 1:{space 2}Log likelihood = {res:-1860.0509}  
+Iteration 2:{space 2}Log likelihood = {res:-1843.2511}  
+Iteration 3:{space 2}Log likelihood = {res:-1843.1342}  
+Iteration 4:{space 2}Log likelihood = {res:-1843.1342}  
+{res}
+{txt}{col 1}Logistic regression{col 57}{lalign 13:Number of obs}{col 70} = {res}{ralign 6:3,584}
+{txt}{col 57}{lalign 13:LR chi2({res:72})}{col 70} = {res}{ralign 6:814.82}
+{txt}{col 57}{lalign 13:Prob > chi2}{col 70} = {res}{ralign 6:0.0000}
+{txt}{col 1}{lalign 14:Log likelihood}{col 15} = {res}{ralign 10:-1843.1342}{txt}{col 57}{lalign 13:Pseudo R2}{col 70} = {res}{ralign 6:0.1810}
+
+{txt}{hline 24}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}             employedFT{col 25}{c |} Coefficient{col 37}  Std. err.{col 49}      z{col 57}   P>|z|{col 65}     [95% con{col 78}f. interval]
+{hline 24}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 20}pc1 {c |}{col 25}{res}{space 2} .1354339{col 37}{space 2} .0314238{col 48}{space 1}    4.31{col 57}{space 3}0.000{col 65}{space 4} .0738445{col 78}{space 3} .1970234
+{txt}{space 5}perserverance_2_sd {c |}{col 25}{res}{space 2} .0115154{col 37}{space 2} .0479842{col 48}{space 1}    0.24{col 57}{space 3}0.810{col 65}{space 4}-.0825319{col 78}{space 3} .1055628
+{txt}{space 5}c_delivery_age_mum {c |}{col 25}{res}{space 2}-.0776679{col 37}{space 2} .0651261{col 48}{space 1}   -1.19{col 57}{space 3}0.233{col 65}{space 4}-.2053127{col 78}{space 3} .0499769
+{txt}{space 3}c_delivery_age_mum_2 {c |}{col 25}{res}{space 2} .0009404{col 37}{space 2} .0011509{col 48}{space 1}    0.82{col 57}{space 3}0.414{col 65}{space 4}-.0013153{col 78}{space 3}  .003196
+{txt}{space 15}region_1 {c |}{col 25}{res}{space 2}-.2462725{col 37}{space 2} .2044773{col 48}{space 1}   -1.20{col 57}{space 3}0.228{col 65}{space 4}-.6470406{col 78}{space 3} .1544957
+{txt}{space 15}region_2 {c |}{col 25}{res}{space 2}-.1697549{col 37}{space 2} .1924651{col 48}{space 1}   -0.88{col 57}{space 3}0.378{col 65}{space 4}-.5469795{col 78}{space 3} .2074697
+{txt}{space 15}region_3 {c |}{col 25}{res}{space 2}-.0521938{col 37}{space 2} .2214486{col 48}{space 1}   -0.24{col 57}{space 3}0.814{col 65}{space 4} -.486225{col 78}{space 3} .3818375
+{txt}{space 15}region_4 {c |}{col 25}{res}{space 2}-.4202631{col 37}{space 2} .2550156{col 48}{space 1}   -1.65{col 57}{space 3}0.099{col 65}{space 4}-.9200844{col 78}{space 3} .0795582
+{txt}{space 15}region_5 {c |}{col 25}{res}{space 2}-.4383616{col 37}{space 2} .1614727{col 48}{space 1}   -2.71{col 57}{space 3}0.007{col 65}{space 4}-.7548423{col 78}{space 3}-.1218809
+{txt}{space 15}region_6 {c |}{col 25}{res}{space 2}-.5761174{col 37}{space 2} .2148678{col 48}{space 1}   -2.68{col 57}{space 3}0.007{col 65}{space 4}-.9972505{col 78}{space 3}-.1549842
+{txt}{space 15}region_7 {c |}{col 25}{res}{space 2}-.3174684{col 37}{space 2} .1874727{col 48}{space 1}   -1.69{col 57}{space 3}0.090{col 65}{space 4}-.6849081{col 78}{space 3} .0499713
+{txt}{space 15}region_8 {c |}{col 25}{res}{space 2} .0182371{col 37}{space 2} .1804898{col 48}{space 1}    0.10{col 57}{space 3}0.920{col 65}{space 4}-.3355164{col 78}{space 3} .3719907
+{txt}{space 15}region_9 {c |}{col 25}{res}{space 2}-.3758553{col 37}{space 2} .2274641{col 48}{space 1}   -1.65{col 57}{space 3}0.098{col 65}{space 4}-.8216768{col 78}{space 3} .0699662
+{txt}{space 14}region_10 {c |}{col 25}{res}{space 2}        0{col 37}{txt}  (omitted)
+{space 12}c_mumsmoked {c |}{col 25}{res}{space 2}-.0089246{col 37}{space 2} .1130337{col 48}{space 1}   -0.08{col 57}{space 3}0.937{col 65}{space 4}-.2304665{col 78}{space 3} .2126174
+{txt}{space 8}c_abnormal_gest {c |}{col 25}{res}{space 2}-.1203848{col 37}{space 2} .0910403{col 48}{space 1}   -1.32{col 57}{space 3}0.186{col 65}{space 4}-.2988204{col 78}{space 3} .0580508
+{txt}{space 18}sex_2 {c |}{col 25}{res}{space 2}-2.204371{col 37}{space 2} .0998229{col 48}{space 1}  -22.08{col 57}{space 3}0.000{col 65}{space 4}-2.400021{col 78}{space 3}-2.008722
+{txt}{space 10}c_birthweight {c |}{col 25}{res}{space 2}-.0000715{col 37}{space 2} .0000868{col 48}{space 1}   -0.82{col 57}{space 3}0.410{col 65}{space 4}-.0002416{col 78}{space 3} .0000985
+{txt}{space 9}c_stayedEd_mum {c |}{col 25}{res}{space 2} .0095714{col 37}{space 2}   .10795{col 48}{space 1}    0.09{col 57}{space 3}0.929{col 65}{space 4}-.2020068{col 78}{space 3} .2211495
+{txt}{space 9}c_stayedEd_dad {c |}{col 25}{res}{space 2} .0693245{col 37}{space 2} .1036651{col 48}{space 1}    0.67{col 57}{space 3}0.504{col 65}{space 4}-.1338554{col 78}{space 3} .2725045
+{txt}{space 15}c_parity {c |}{col 25}{res}{space 2}-.0137374{col 37}{space 2} .0560652{col 48}{space 1}   -0.25{col 57}{space 3}0.806{col 65}{space 4}-.1236231{col 78}{space 3} .0961483
+{txt}{space 6}c_prevDeathUnder7 {c |}{col 25}{res}{space 2} .0654881{col 37}{space 2} .3104624{col 48}{space 1}    0.21{col 57}{space 3}0.833{col 65}{space 4}-.5430071{col 78}{space 3} .6739833
+{txt}{space 6}c_prevDeathAfter7 {c |}{col 25}{res}{space 2} .2511332{col 37}{space 2} .3010411{col 48}{space 1}    0.83{col 57}{space 3}0.404{col 65}{space 4}-.3388966{col 78}{space 3}  .841163
+{txt}{space 7}c_prevStillbirth {c |}{col 25}{res}{space 2}-.0585336{col 37}{space 2} .3141504{col 48}{space 1}   -0.19{col 57}{space 3}0.852{col 65}{space 4}-.6742571{col 78}{space 3} .5571899
+{txt}{space 7}c_prevMiscarries {c |}{col 25}{res}{space 2} .0043922{col 37}{space 2} .1190186{col 48}{space 1}    0.04{col 57}{space 3}0.971{col 65}{space 4}-.2288801{col 78}{space 3} .2376644
+{txt}{space 12}c_breastfed {c |}{col 25}{res}{space 2}-.1133861{col 37}{space 2} .1059987{col 48}{space 1}   -1.07{col 57}{space 3}0.285{col 65}{space 4}-.3211397{col 78}{space 3} .0943674
+{txt}{space 9}c_inpatientAt5 {c |}{col 25}{res}{space 2}-.1555069{col 37}{space 2} .1064702{col 48}{space 1}   -1.46{col 57}{space 3}0.144{col 65}{space 4}-.3641846{col 78}{space 3} .0531708
+{txt}c_hearSeeSpeak_issueAt5 {c |}{col 25}{res}{space 2}-.1141985{col 37}{space 2}  .105871{col 48}{space 1}   -1.08{col 57}{space 3}0.281{col 65}{space 4}-.3217019{col 78}{space 3} .0933049
+{txt}{space 8}c_childReadAt_5 {c |}{col 25}{res}{space 2} .0365829{col 37}{space 2} .0971911{col 48}{space 1}    0.38{col 57}{space 3}0.707{col 65}{space 4}-.1539081{col 78}{space 3} .2270739
+{txt}{space 10}c_mum_nonqual {c |}{col 25}{res}{space 2}  .275844{col 37}{space 2} .1647399{col 48}{space 1}    1.67{col 57}{space 3}0.094{col 65}{space 4}-.0470403{col 78}{space 3} .5987282
+{txt}{space 8}c_mum_secondary {c |}{col 25}{res}{space 2} .2134555{col 37}{space 2} .1562294{col 48}{space 1}    1.37{col 57}{space 3}0.172{col 65}{space 4}-.0927485{col 78}{space 3} .5196594
+{txt}{space 11}c_mum_degree {c |}{col 25}{res}{space 2} .1529381{col 37}{space 2} .3002518{col 48}{space 1}    0.51{col 57}{space 3}0.610{col 65}{space 4}-.4355446{col 78}{space 3} .7414208
+{txt}{space 10}c_dad_nonqual {c |}{col 25}{res}{space 2} .0683648{col 37}{space 2} .1523398{col 48}{space 1}    0.45{col 57}{space 3}0.654{col 65}{space 4}-.2302157{col 78}{space 3} .3669453
+{txt}{space 8}c_dad_secondary {c |}{col 25}{res}{space 2} .1311395{col 37}{space 2} .1490372{col 48}{space 1}    0.88{col 57}{space 3}0.379{col 65}{space 4}-.1609681{col 78}{space 3} .4232471
+{txt}{space 11}c_dad_degree {c |}{col 25}{res}{space 2}-.0405868{col 37}{space 2} .1826927{col 48}{space 1}   -0.22{col 57}{space 3}0.824{col 65}{space 4}-.3986579{col 78}{space 3} .3174843
+{txt}{space 8}c_mumWorksFTAt5 {c |}{col 25}{res}{space 2} .0934313{col 37}{space 2} .1215434{col 48}{space 1}    0.77{col 57}{space 3}0.442{col 65}{space 4}-.1447894{col 78}{space 3}  .331652
+{txt}{space 8}c_mumWorksPTAt5 {c |}{col 25}{res}{space 2} .1241049{col 37}{space 2} .1155852{col 48}{space 1}    1.07{col 57}{space 3}0.283{col 65}{space 4}-.1024379{col 78}{space 3} .3506477
+{txt}{space 13}c_nonwhite {c |}{col 25}{res}{space 2} .0766198{col 37}{space 2} .1647637{col 48}{space 1}    0.47{col 57}{space 3}0.642{col 65}{space 4}-.2463112{col 78}{space 3} .3995508
+{txt}{space 8}c_noSiblingsAt5 {c |}{col 25}{res}{space 2} .0442707{col 37}{space 2} .0687432{col 48}{space 1}    0.64{col 57}{space 3}0.520{col 65}{space 4}-.0904635{col 78}{space 3}  .179005
+{txt}{space 8}c_childHhldAt10 {c |}{col 25}{res}{space 2}-.0089654{col 37}{space 2} .0600961{col 48}{space 1}   -0.15{col 57}{space 3}0.881{col 65}{space 4}-.1267515{col 78}{space 3} .1088207
+{txt}{space 4}c_inpatientBefore10 {c |}{col 25}{res}{space 2}  .024769{col 37}{space 2} .1036724{col 48}{space 1}    0.24{col 57}{space 3}0.811{col 65}{space 4}-.1784251{col 78}{space 3} .2279632
+{txt}{space 3}c_fatherUnemployed10 {c |}{col 25}{res}{space 2} .7212898{col 37}{space 2} .2829273{col 48}{space 1}    2.55{col 57}{space 3}0.011{col 65}{space 4} .1667625{col 78}{space 3} 1.275817
+{txt}{space 5}c_fatherStayhome10 {c |}{col 25}{res}{space 2}-.3620125{col 37}{space 2} 1.013848{col 48}{space 1}   -0.36{col 57}{space 3}0.721{col 65}{space 4}-2.349117{col 78}{space 3} 1.625092
+{txt}{space 3}c_motherUnemployed10 {c |}{col 25}{res}{space 2}  .107329{col 37}{space 2} .1228045{col 48}{space 1}    0.87{col 57}{space 3}0.382{col 65}{space 4}-.1333634{col 78}{space 3} .3480215
+{txt}{space 5}c_motherStayhome10 {c |}{col 25}{res}{space 2}-.1686353{col 37}{space 2} .0999784{col 48}{space 1}   -1.69{col 57}{space 3}0.092{col 65}{space 4}-.3645893{col 78}{space 3} .0273187
+{txt}{space 14}c_benefit {c |}{col 25}{res}{space 2} -.138763{col 37}{space 2} .1099658{col 48}{space 1}   -1.26{col 57}{space 3}0.207{col 65}{space 4} -.354292{col 78}{space 3} .0767661
+{txt}{space 13}c_incband1 {c |}{col 25}{res}{space 2}-.0136627{col 37}{space 2} .2261139{col 48}{space 1}   -0.06{col 57}{space 3}0.952{col 65}{space 4}-.4568378{col 78}{space 3} .4295124
+{txt}{space 13}c_incband2 {c |}{col 25}{res}{space 2}-.3265933{col 37}{space 2} .2982844{col 48}{space 1}   -1.09{col 57}{space 3}0.274{col 65}{space 4}-.9112201{col 78}{space 3} .2580334
+{txt}{space 13}c_incband3 {c |}{col 25}{res}{space 2}-.0438362{col 37}{space 2} .2066462{col 48}{space 1}   -0.21{col 57}{space 3}0.832{col 65}{space 4}-.4488554{col 78}{space 3} .3611829
+{txt}{space 13}c_incband4 {c |}{col 25}{res}{space 2}  .111502{col 37}{space 2} .1966016{col 48}{space 1}    0.57{col 57}{space 3}0.571{col 65}{space 4}  -.27383{col 78}{space 3} .4968341
+{txt}{space 13}c_incband5 {c |}{col 25}{res}{space 2}-.0281584{col 37}{space 2}  .203363{col 48}{space 1}   -0.14{col 57}{space 3}0.890{col 65}{space 4}-.4267426{col 78}{space 3} .3704258
+{txt}{space 13}c_incband6 {c |}{col 25}{res}{space 2}-.1154949{col 37}{space 2} .2318341{col 48}{space 1}   -0.50{col 57}{space 3}0.618{col 65}{space 4}-.5698814{col 78}{space 3} .3388915
+{txt}{space 13}c_incband7 {c |}{col 25}{res}{space 2}        0{col 37}{txt}  (omitted)
+{space 7}c_accTenureAt101 {c |}{col 25}{res}{space 2}-1.424171{col 37}{space 2} 1.110582{col 48}{space 1}   -1.28{col 57}{space 3}0.200{col 65}{space 4}-3.600872{col 78}{space 3} .7525308
+{txt}{space 7}c_accTenureAt102 {c |}{col 25}{res}{space 2}-1.289787{col 37}{space 2} 1.106553{col 48}{space 1}   -1.17{col 57}{space 3}0.244{col 65}{space 4}-3.458591{col 78}{space 3} .8790168
+{txt}{space 7}c_accTenureAt103 {c |}{col 25}{res}{space 2}-1.385262{col 37}{space 2} 1.111389{col 48}{space 1}   -1.25{col 57}{space 3}0.213{col 65}{space 4}-3.563544{col 78}{space 3} .7930196
+{txt}{space 7}c_accTenureAt104 {c |}{col 25}{res}{space 2}-1.318453{col 37}{space 2}  1.13482{col 48}{space 1}   -1.16{col 57}{space 3}0.245{col 65}{space 4}-3.542659{col 78}{space 3}  .905754
+{txt}{space 7}c_accTenureAt105 {c |}{col 25}{res}{space 2}-2.297955{col 37}{space 2} 1.553905{col 48}{space 1}   -1.48{col 57}{space 3}0.139{col 65}{space 4}-5.343553{col 78}{space 3} .7476428
+{txt}{space 7}c_accTenureAt106 {c |}{col 25}{res}{space 2}-1.329483{col 37}{space 2} 1.130025{col 48}{space 1}   -1.18{col 57}{space 3}0.239{col 65}{space 4}-3.544291{col 78}{space 3} .8853247
+{txt}{space 7}c_accTenureAt107 {c |}{col 25}{res}{space 2}        0{col 37}{txt}  (omitted)
+{space 10}c_roomNumAt10 {c |}{col 25}{res}{space 2}-.0106361{col 37}{space 2}  .027945{col 48}{space 1}   -0.38{col 57}{space 3}0.703{col 65}{space 4}-.0654074{col 78}{space 3} .0441352
+{txt}{space 5}c_motherSmokesat10 {c |}{col 25}{res}{space 2}  .029029{col 37}{space 2} .1159649{col 48}{space 1}    0.25{col 57}{space 3}0.802{col 65}{space 4}-.1982579{col 78}{space 3} .2563159
+{txt}{space 5}c_fatherSmokesat10 {c |}{col 25}{res}{space 2}-.1049462{col 37}{space 2} .0854045{col 48}{space 1}   -1.23{col 57}{space 3}0.219{col 65}{space 4}-.2723358{col 78}{space 3} .0624435
+{txt}{space 6}c_eyesightIssue10 {c |}{col 25}{res}{space 2}-.1361747{col 37}{space 2} .5064925{col 48}{space 1}   -0.27{col 57}{space 3}0.788{col 65}{space 4}-1.128882{col 78}{space 3} .8565324
+{txt}{space 7}c_hearingIssue10 {c |}{col 25}{res}{space 2}-.4384353{col 37}{space 2} .3973566{col 48}{space 1}   -1.10{col 57}{space 3}0.270{col 65}{space 4} -1.21724{col 78}{space 3} .3403693
+{txt}{space 8}c_speechIssue10 {c |}{col 25}{res}{space 2}-1.046069{col 37}{space 2} .9185466{col 48}{space 1}   -1.14{col 57}{space 3}0.255{col 65}{space 4}-2.846387{col 78}{space 3} .7542489
+{txt}{space 8}c_heightAt10_sd {c |}{col 25}{res}{space 2} .0631829{col 37}{space 2} .0571426{col 48}{space 1}    1.11{col 57}{space 3}0.269{col 65}{space 4}-.0488146{col 78}{space 3} .1751803
+{txt}{space 8}c_weightAt10_sd {c |}{col 25}{res}{space 2}-.0879537{col 37}{space 2} .0543505{col 48}{space 1}   -1.62{col 57}{space 3}0.106{col 65}{space 4}-.1944787{col 78}{space 3} .0185712
+{txt}{space 7}c_disengagedAt10 {c |}{col 25}{res}{space 2} .0612531{col 37}{space 2} .0481972{col 48}{space 1}    1.27{col 57}{space 3}0.204{col 65}{space 4}-.0332116{col 78}{space 3} .1557178
+{txt}{space 20}pcB {c |}{col 25}{res}{space 2}  .017661{col 37}{space 2} .0223717{col 48}{space 1}    0.79{col 57}{space 3}0.430{col 65}{space 4}-.0261867{col 78}{space 3} .0615088
+{txt}{space 20}pcD {c |}{col 25}{res}{space 2}-.0337881{col 37}{space 2} .0278117{col 48}{space 1}   -1.21{col 57}{space 3}0.224{col 65}{space 4}-.0882981{col 78}{space 3} .0207218
+{txt}{space 20}pcE {c |}{col 25}{res}{space 2}-.0152642{col 37}{space 2} .0346043{col 48}{space 1}   -0.44{col 57}{space 3}0.659{col 65}{space 4}-.0830874{col 78}{space 3} .0525591
+{txt}{space 20}pcF {c |}{col 25}{res}{space 2}  .023199{col 37}{space 2} .0394958{col 48}{space 1}    0.59{col 57}{space 3}0.557{col 65}{space 4}-.0542114{col 78}{space 3} .1006094
+{txt}{space 20}pcG {c |}{col 25}{res}{space 2} .0035017{col 37}{space 2} .0407219{col 48}{space 1}    0.09{col 57}{space 3}0.931{col 65}{space 4}-.0763117{col 78}{space 3} .0833151
+{txt}{space 20}pcH {c |}{col 25}{res}{space 2} .0887915{col 37}{space 2} .0434899{col 48}{space 1}    2.04{col 57}{space 3}0.041{col 65}{space 4} .0035529{col 78}{space 3} .1740302
+{txt}{space 18}_cons {c |}{col 25}{res}{space 2} 5.269316{col 37}{space 2} 1.580103{col 48}{space 1}    3.33{col 57}{space 3}0.001{col 65}{space 4} 2.172372{col 78}{space 3} 8.366261
+{txt}{hline 24}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+{com}. mfx
+
+{txt}Marginal effects after logit
+      y  = Pr(employedFT) (predict)
+         = {res} .73065837
+{txt}{hline 9}{c TT}{hline 68}
+variable {c |}{col 17}dy/dx{col 26}Std. err.{col 40}z{col 45}P>|z|{col 52}[    95% C.I.   ]{col 75}X
+{hline 9}{c +}{hline 68}
+     pc1 {c |}  {res}  .026653      .00617    4.32   0.000   .014552  .038754   .253508
+{txt}per~2_sd {c |}  {res} .0022662      .00944    0.24   0.810  -.016242  .020774   .109188
+{txt}c_deli~m {c |}  {res}-.0152848      .01282   -1.19   0.233  -.040404  .009834   25.9743
+{txt}c_deli~2 {c |}  {res} .0001851      .00023    0.82   0.414  -.000259  .000629   702.816
+{txt}region_1*{c |}  {res}-.0507183       .0439   -1.16   0.248  -.136759  .035322   .075614
+{txt}region_2*{c |}  {res}-.0344292      .04016   -0.86   0.391  -.113139  .044281   .100167
+{txt}region_3*{c |}  {res}-.0103792      .04449   -0.23   0.816  -.097579   .07682   .061663
+{txt}region_4*{c |}  {res}-.0896148      .05814   -1.54   0.123  -.203569  .024339   .035714
+{txt}region_5*{c |}  {res}-.0900577      .03443   -2.62   0.009  -.157548 -.022567   .267857
+{txt}region_6*{c |}  {res}-.1252505      .05042   -2.48   0.013  -.224079 -.026422    .05971
+{txt}region_7*{c |}  {res}-.0658354      .04074   -1.62   0.106  -.145678  .014008   .114955
+{txt}region_8*{c |}  {res} .0035781       .0353    0.10   0.919  -.065616  .072773   .139788
+{txt}region_9*{c |}  {res}-.0793578      .05101   -1.56   0.120  -.179334  .020619   .052176
+{txt}c_mums~d*{c |}  {res}-.0017572      .02227   -0.08   0.937  -.045397  .041883   .384487
+{txt}c_abno~t*{c |}  {res}-.0239472       .0183   -1.31   0.191  -.059812  .011918   .302455
+   {txt}sex_2*{c |}  {res}-.4060726      .01506  -26.96   0.000  -.435593 -.376552   .531808
+{txt}c_birt~t {c |}  {res}-.0000141      .00002   -0.82   0.410  -.000048  .000019   3327.62
+{txt}c_stay~m*{c |}  {res} .0018826      .02122    0.09   0.929  -.039712  .043477   .381417
+{txt}c_stay~d*{c |}  {res} .0135957      .02026    0.67   0.502  -.026106  .053298   .393136
+{txt}c_parity {c |}  {res}-.0027035      .01103   -0.25   0.806  -.024329  .018922   1.06836
+{txt}c_p~der7*{c |}  {res} .0126986       .0593    0.21   0.830  -.103522   .12892   .017857
+{txt}c_p~ter7*{c |}  {res} .0465962      .05241    0.89   0.374  -.056133  .149326   .018694
+{txt}c_prev~h*{c |}  {res}-.0116677      .06341   -0.18   0.854   -.13595  .112614   .018973
+{txt}c_prev~s*{c |}  {res} .0008637      .02339    0.04   0.971  -.044976  .046703   .135045
+{txt}c_brea~d*{c |}  {res}-.0226496      .02148   -1.05   0.292  -.064751  .019452   .208426
+{txt}c_inpa~5*{c |}  {res}-.0312243      .02179   -1.43   0.152  -.073928  .011479   .211496
+{txt}c_hear~5*{c |}  {res}-.0228208      .02147   -1.06   0.288  -.064901   .01926   .202846
+{txt}c_chil~5*{c |}  {res}  .007214       .0192    0.38   0.707  -.030427  .044855   .621094
+{txt}c_mum_~l*{c |}  {res} .0537918      .03181    1.69   0.091  -.008557  .116141   .433036
+{txt}c_mum_~y*{c |}  {res} .0414234      .02988    1.39   0.166  -.017135  .099982   .362723
+{txt}c_mum_~e*{c |}  {res} .0290758      .05505    0.53   0.597  -.078817  .136969   .026786
+{txt}c_dad_~l*{c |}  {res} .0133878      .02968    0.45   0.652   -.04479  .071566   .345424
+{txt}c_dad_~y*{c |}  {res} .0255045      .02864    0.89   0.373  -.030621   .08163   .308594
+{txt}c_dad_~e*{c |}  {res}-.0080414      .03644   -0.22   0.825   -.07946  .063377   .136719
+{txt}c_~FTAt5*{c |}  {res} .0181958      .02342    0.78   0.437  -.027702  .064094   .261161
+{txt}c_~PTAt5*{c |}  {res}  .023967      .02189    1.09   0.274  -.018935  .066869   .177734
+{txt}c_nonw~e*{c |}  {res} .0148933      .03163    0.47   0.638  -.047092  .076879   .155413
+{txt}c_noSi~5 {c |}  {res} .0087123      .01353    0.64   0.520  -.017801  .035226   1.30525
+{txt}c_chi~10 {c |}  {res}-.0017644      .01183   -0.15   0.881  -.024944  .021416   2.49888
+{txt}c_inp~10*{c |}  {res} .0048584      .02027    0.24   0.811  -.034865  .044581   .211775
+{txt}c_fa~d10*{c |}  {res} .1186459      .03747    3.17   0.002   .045205  .192087   .025949
+{txt}c_f~me10*{c |}  {res}-.0767994      .22936   -0.33   0.738  -.526336  .372737   .001953
+{txt}c_mo~d10*{c |}  {res} .0207493      .02331    0.89   0.373  -.024934  .066433     .1476
+{txt}c_m~me10*{c |}  {res}-.0337301      .02031   -1.66   0.097  -.073532  .006072   .284877
+{txt}c_bene~t*{c |}  {res}-.0278172      .02244   -1.24   0.215  -.071801  .016167   .203683
+{txt}c_incb~1*{c |}  {res}-.0026957      .04473   -0.06   0.952  -.090358  .084967   .091797
+{txt}c_incb~2*{c |}  {res}-.0685167      .06619   -1.04   0.301  -.198245  .061211   .037388
+{txt}c_incb~3*{c |}  {res}-.0086709      .04108   -0.21   0.833  -.089189  .071847   .246094
+{txt}c_incb~4*{c |}  {res} .0217602      .03804    0.57   0.567  -.052797  .096318   .340123
+{txt}c_incb~5*{c |}  {res}-.0055656      .04037   -0.14   0.890  -.084687  .073556   .164063
+{txt}c_incb~6*{c |}  {res}-.0232496      .04769   -0.49   0.626  -.116729   .07023   .063337
+{txt}c_ac~101*{c |}  {res} -.327115      .26475   -1.24   0.217  -.846007  .191778   .112444
+{txt}c_ac~102*{c |}  {res}-.2414259      .19476   -1.24   0.215   -.62315  .140298    .56529
+{txt}c_ac~103*{c |}  {res}-.3020975      .25233   -1.20   0.231   -.79665  .192454   .261161
+{txt}c_ac~104*{c |}  {res}-.3084595       .2764   -1.12   0.264  -.850191  .233272   .025391
+{txt}c_ac~105*{c |}  {res} -.516582      .26211   -1.97   0.049   -1.0303 -.002861   .001395
+{txt}c_ac~106*{c |}  {res}-.3107257      .27475   -1.13   0.258  -.849225  .227774   .031529
+{txt}c_roo~10 {c |}  {res}-.0020932       .0055   -0.38   0.703  -.012872  .008685   5.02651
+{txt}c_moth..*{c |}  {res} .0057029      .02274    0.25   0.802   -.03887  .050275   .370536
+{txt}c_fath..*{c |}  {res}  -.02065       .0168   -1.23   0.219  -.053573  .012273   .501395
+{txt}c_eye~10*{c |}  {res}-.0259534      .09335   -0.28   0.781  -.208909  .157002    .99442
+{txt}c_hea~10*{c |}  {res}-.0941491      .09168   -1.03   0.304  -.273829  .085531   .010882
+{txt}c_spe~10*{c |}  {res}-.2425889       .2294   -1.06   0.290  -.692196  .207018   .001674
+{txt}c_heig~d {c |}  {res} .0124342      .01125    1.11   0.269  -.009606  .034475   .059098
+{txt}c_weig~d {c |}  {res} -.017309       .0107   -1.62   0.106  -.038274  .003656    .03089
+{txt}c_dis~10 {c |}  {res} .0120544      .00948    1.27   0.204  -.006535  .030643   .617188
+     {txt}pcB {c |}  {res} .0034756       .0044    0.79   0.430  -.005154  .012105  -.009553
+     {txt}pcD {c |}  {res}-.0066494      .00547   -1.21   0.224  -.017378  .004079  -.005419
+     {txt}pcE {c |}  {res}-.0030039      .00681   -0.44   0.659  -.016351  .010343  -.041239
+     {txt}pcF {c |}  {res} .0045655      .00777    0.59   0.557  -.010669    .0198   .048815
+     {txt}pcG {c |}  {res} .0006891      .00801    0.09   0.931  -.015018  .016396   .001414
+     {txt}pcH {c |}  {res} .0174739      .00855    2.04   0.041   .000709  .034239    .03151
+{txt}{hline 9}{c BT}{hline 68}
+(*) dy/dx is for discrete change of dummy variable from 0 to 1
+
+{com}. logit  isManagerSupervisor  pc1 $cogcontrols
+
+{txt}note: {bf:c_accTenureAt105} != 0 predicts success perfectly;
+      {bf:c_accTenureAt105} omitted and 2 obs not used.
+
+note: {bf:region_10} omitted because of collinearity.
+note: {bf:c_incband7} omitted because of collinearity.
+note: {bf:c_accTenureAt107} omitted because of collinearity.
+{res}{txt}Iteration 0:{space 2}Log likelihood = {res:-1676.5698}  
+Iteration 1:{space 2}Log likelihood = {res:-1568.0903}  
+Iteration 2:{space 2}Log likelihood = {res:-1567.8957}  
+Iteration 3:{space 2}Log likelihood = {res:-1567.8956}  
+{res}
+{txt}{col 1}Logistic regression{col 57}{lalign 13:Number of obs}{col 70} = {res}{ralign 6:2,420}
+{txt}{col 57}{lalign 13:LR chi2({res:71})}{col 70} = {res}{ralign 6:217.35}
+{txt}{col 57}{lalign 13:Prob > chi2}{col 70} = {res}{ralign 6:0.0000}
+{txt}{col 1}{lalign 14:Log likelihood}{col 15} = {res}{ralign 10:-1567.8956}{txt}{col 57}{lalign 13:Pseudo R2}{col 70} = {res}{ralign 6:0.0648}
+
+{txt}{hline 24}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}    isManagerSupervisor{col 25}{c |} Coefficient{col 37}  Std. err.{col 49}      z{col 57}   P>|z|{col 65}     [95% con{col 78}f. interval]
+{hline 24}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 20}pc1 {c |}{col 25}{res}{space 2} .1164021{col 37}{space 2} .0333856{col 48}{space 1}    3.49{col 57}{space 3}0.000{col 65}{space 4} .0509676{col 78}{space 3} .1818367
+{txt}{space 5}perserverance_2_sd {c |}{col 25}{res}{space 2} .0637569{col 37}{space 2} .0498246{col 48}{space 1}    1.28{col 57}{space 3}0.201{col 65}{space 4}-.0338976{col 78}{space 3} .1614114
+{txt}{space 5}c_delivery_age_mum {c |}{col 25}{res}{space 2}-.0173215{col 37}{space 2} .0679247{col 48}{space 1}   -0.26{col 57}{space 3}0.799{col 65}{space 4}-.1504514{col 78}{space 3} .1158083
+{txt}{space 3}c_delivery_age_mum_2 {c |}{col 25}{res}{space 2}-.0001812{col 37}{space 2} .0011971{col 48}{space 1}   -0.15{col 57}{space 3}0.880{col 65}{space 4}-.0025274{col 78}{space 3}  .002165
+{txt}{space 15}region_1 {c |}{col 25}{res}{space 2}-.2029492{col 37}{space 2} .2093501{col 48}{space 1}   -0.97{col 57}{space 3}0.332{col 65}{space 4}-.6132678{col 78}{space 3} .2073695
+{txt}{space 15}region_2 {c |}{col 25}{res}{space 2}-.2471842{col 37}{space 2} .1974238{col 48}{space 1}   -1.25{col 57}{space 3}0.211{col 65}{space 4}-.6341278{col 78}{space 3} .1397594
+{txt}{space 15}region_3 {c |}{col 25}{res}{space 2} .0224014{col 37}{space 2} .2237029{col 48}{space 1}    0.10{col 57}{space 3}0.920{col 65}{space 4}-.4160482{col 78}{space 3} .4608511
+{txt}{space 15}region_4 {c |}{col 25}{res}{space 2}-.3217188{col 37}{space 2} .2689142{col 48}{space 1}   -1.20{col 57}{space 3}0.232{col 65}{space 4}-.8487809{col 78}{space 3} .2053433
+{txt}{space 15}region_5 {c |}{col 25}{res}{space 2} .1159436{col 37}{space 2} .1677253{col 48}{space 1}    0.69{col 57}{space 3}0.489{col 65}{space 4}-.2127919{col 78}{space 3}  .444679
+{txt}{space 15}region_6 {c |}{col 25}{res}{space 2}-.0780962{col 37}{space 2} .2287237{col 48}{space 1}   -0.34{col 57}{space 3}0.733{col 65}{space 4}-.5263864{col 78}{space 3}  .370194
+{txt}{space 15}region_7 {c |}{col 25}{res}{space 2} .3659246{col 37}{space 2} .1935456{col 48}{space 1}    1.89{col 57}{space 3}0.059{col 65}{space 4}-.0134177{col 78}{space 3}  .745267
+{txt}{space 15}region_8 {c |}{col 25}{res}{space 2} -.111958{col 37}{space 2} .1821459{col 48}{space 1}   -0.61{col 57}{space 3}0.539{col 65}{space 4}-.4689574{col 78}{space 3} .2450413
+{txt}{space 15}region_9 {c |}{col 25}{res}{space 2} .2751756{col 37}{space 2}  .240414{col 48}{space 1}    1.14{col 57}{space 3}0.252{col 65}{space 4}-.1960272{col 78}{space 3} .7463785
+{txt}{space 14}region_10 {c |}{col 25}{res}{space 2}        0{col 37}{txt}  (omitted)
+{space 12}c_mumsmoked {c |}{col 25}{res}{space 2} .1224797{col 37}{space 2}  .118689{col 48}{space 1}    1.03{col 57}{space 3}0.302{col 65}{space 4}-.1101465{col 78}{space 3} .3551059
+{txt}{space 8}c_abnormal_gest {c |}{col 25}{res}{space 2}-.0176461{col 37}{space 2} .0972899{col 48}{space 1}   -0.18{col 57}{space 3}0.856{col 65}{space 4}-.2083308{col 78}{space 3} .1730385
+{txt}{space 18}sex_2 {c |}{col 25}{res}{space 2}-.5912896{col 37}{space 2} .0919841{col 48}{space 1}   -6.43{col 57}{space 3}0.000{col 65}{space 4} -.771575{col 78}{space 3}-.4110041
+{txt}{space 10}c_birthweight {c |}{col 25}{res}{space 2} .0000668{col 37}{space 2} .0000924{col 48}{space 1}    0.72{col 57}{space 3}0.470{col 65}{space 4}-.0001142{col 78}{space 3} .0002478
+{txt}{space 9}c_stayedEd_mum {c |}{col 25}{res}{space 2} .2838801{col 37}{space 2} .1140259{col 48}{space 1}    2.49{col 57}{space 3}0.013{col 65}{space 4} .0603934{col 78}{space 3} .5073668
+{txt}{space 9}c_stayedEd_dad {c |}{col 25}{res}{space 2}-.0853203{col 37}{space 2} .1087738{col 48}{space 1}   -0.78{col 57}{space 3}0.433{col 65}{space 4}-.2985131{col 78}{space 3} .1278725
+{txt}{space 15}c_parity {c |}{col 25}{res}{space 2} .0939809{col 37}{space 2} .0611956{col 48}{space 1}    1.54{col 57}{space 3}0.125{col 65}{space 4}-.0259603{col 78}{space 3}  .213922
+{txt}{space 6}c_prevDeathUnder7 {c |}{col 25}{res}{space 2} .3687883{col 37}{space 2} .3225294{col 48}{space 1}    1.14{col 57}{space 3}0.253{col 65}{space 4}-.2633578{col 78}{space 3} 1.000934
+{txt}{space 6}c_prevDeathAfter7 {c |}{col 25}{res}{space 2}-.1441285{col 37}{space 2} .3501458{col 48}{space 1}   -0.41{col 57}{space 3}0.681{col 65}{space 4}-.8304015{col 78}{space 3} .5421446
+{txt}{space 7}c_prevStillbirth {c |}{col 25}{res}{space 2}-.2431357{col 37}{space 2} .3351303{col 48}{space 1}   -0.73{col 57}{space 3}0.468{col 65}{space 4}-.8999789{col 78}{space 3} .4137076
+{txt}{space 7}c_prevMiscarries {c |}{col 25}{res}{space 2}-.0238617{col 37}{space 2} .1283364{col 48}{space 1}   -0.19{col 57}{space 3}0.852{col 65}{space 4}-.2753964{col 78}{space 3}  .227673
+{txt}{space 12}c_breastfed {c |}{col 25}{res}{space 2} .1400613{col 37}{space 2} .1133572{col 48}{space 1}    1.24{col 57}{space 3}0.217{col 65}{space 4}-.0821148{col 78}{space 3} .3622374
+{txt}{space 9}c_inpatientAt5 {c |}{col 25}{res}{space 2}-.0566809{col 37}{space 2}  .110363{col 48}{space 1}   -0.51{col 57}{space 3}0.608{col 65}{space 4}-.2729884{col 78}{space 3} .1596265
+{txt}c_hearSeeSpeak_issueAt5 {c |}{col 25}{res}{space 2} .0593292{col 37}{space 2} .1106804{col 48}{space 1}    0.54{col 57}{space 3}0.592{col 65}{space 4}-.1576003{col 78}{space 3} .2762588
+{txt}{space 8}c_childReadAt_5 {c |}{col 25}{res}{space 2} .2397608{col 37}{space 2} .1023878{col 48}{space 1}    2.34{col 57}{space 3}0.019{col 65}{space 4} .0390844{col 78}{space 3} .4404371
+{txt}{space 10}c_mum_nonqual {c |}{col 25}{res}{space 2} .0556276{col 37}{space 2} .1775962{col 48}{space 1}    0.31{col 57}{space 3}0.754{col 65}{space 4}-.2924547{col 78}{space 3} .4037098
+{txt}{space 8}c_mum_secondary {c |}{col 25}{res}{space 2}-.0228908{col 37}{space 2} .1694136{col 48}{space 1}   -0.14{col 57}{space 3}0.893{col 65}{space 4}-.3549353{col 78}{space 3} .3091537
+{txt}{space 11}c_mum_degree {c |}{col 25}{res}{space 2}  .510819{col 37}{space 2} .3403053{col 48}{space 1}    1.50{col 57}{space 3}0.133{col 65}{space 4}-.1561672{col 78}{space 3} 1.177805
+{txt}{space 10}c_dad_nonqual {c |}{col 25}{res}{space 2}-.0980977{col 37}{space 2} .1670685{col 48}{space 1}   -0.59{col 57}{space 3}0.557{col 65}{space 4} -.425546{col 78}{space 3} .2293505
+{txt}{space 8}c_dad_secondary {c |}{col 25}{res}{space 2}-.0401725{col 37}{space 2}  .161645{col 48}{space 1}   -0.25{col 57}{space 3}0.804{col 65}{space 4}-.3569908{col 78}{space 3} .2766459
+{txt}{space 11}c_dad_degree {c |}{col 25}{res}{space 2}-.0020576{col 37}{space 2} .1976485{col 48}{space 1}   -0.01{col 57}{space 3}0.992{col 65}{space 4}-.3894416{col 78}{space 3} .3853263
+{txt}{space 8}c_mumWorksFTAt5 {c |}{col 25}{res}{space 2}-.2357917{col 37}{space 2} .1256687{col 48}{space 1}   -1.88{col 57}{space 3}0.061{col 65}{space 4}-.4820978{col 78}{space 3} .0105145
+{txt}{space 8}c_mumWorksPTAt5 {c |}{col 25}{res}{space 2}  -.03532{col 37}{space 2}  .121606{col 48}{space 1}   -0.29{col 57}{space 3}0.771{col 65}{space 4}-.2736634{col 78}{space 3} .2030235
+{txt}{space 13}c_nonwhite {c |}{col 25}{res}{space 2} .4297883{col 37}{space 2} .1783169{col 48}{space 1}    2.41{col 57}{space 3}0.016{col 65}{space 4} .0802935{col 78}{space 3} .7792831
+{txt}{space 8}c_noSiblingsAt5 {c |}{col 25}{res}{space 2} .0168781{col 37}{space 2} .0759332{col 48}{space 1}    0.22{col 57}{space 3}0.824{col 65}{space 4}-.1319483{col 78}{space 3} .1657046
+{txt}{space 8}c_childHhldAt10 {c |}{col 25}{res}{space 2}-.0410182{col 37}{space 2} .0625898{col 48}{space 1}   -0.66{col 57}{space 3}0.512{col 65}{space 4}-.1636919{col 78}{space 3} .0816556
+{txt}{space 4}c_inpatientBefore10 {c |}{col 25}{res}{space 2}-.0737429{col 37}{space 2}  .105742{col 48}{space 1}   -0.70{col 57}{space 3}0.486{col 65}{space 4}-.2809935{col 78}{space 3} .1335077
+{txt}{space 3}c_fatherUnemployed10 {c |}{col 25}{res}{space 2} .6305995{col 37}{space 2} .3293872{col 48}{space 1}    1.91{col 57}{space 3}0.056{col 65}{space 4}-.0149875{col 78}{space 3} 1.276186
+{txt}{space 5}c_fatherStayhome10 {c |}{col 25}{res}{space 2}  .905045{col 37}{space 2} 1.195749{col 48}{space 1}    0.76{col 57}{space 3}0.449{col 65}{space 4}-1.438579{col 78}{space 3} 3.248669
+{txt}{space 3}c_motherUnemployed10 {c |}{col 25}{res}{space 2} .0835619{col 37}{space 2} .1278472{col 48}{space 1}    0.65{col 57}{space 3}0.513{col 65}{space 4} -.167014{col 78}{space 3} .3341379
+{txt}{space 5}c_motherStayhome10 {c |}{col 25}{res}{space 2}-.1307168{col 37}{space 2} .1068951{col 48}{space 1}   -1.22{col 57}{space 3}0.221{col 65}{space 4}-.3402273{col 78}{space 3} .0787936
+{txt}{space 14}c_benefit {c |}{col 25}{res}{space 2} -.154861{col 37}{space 2} .1203947{col 48}{space 1}   -1.29{col 57}{space 3}0.198{col 65}{space 4}-.3908302{col 78}{space 3} .0811082
+{txt}{space 13}c_incband1 {c |}{col 25}{res}{space 2}-.4287063{col 37}{space 2}  .246029{col 48}{space 1}   -1.74{col 57}{space 3}0.081{col 65}{space 4}-.9109143{col 78}{space 3} .0535016
+{txt}{space 13}c_incband2 {c |}{col 25}{res}{space 2}-.3252907{col 37}{space 2} .3364826{col 48}{space 1}   -0.97{col 57}{space 3}0.334{col 65}{space 4}-.9847844{col 78}{space 3}  .334203
+{txt}{space 13}c_incband3 {c |}{col 25}{res}{space 2}-.2738171{col 37}{space 2} .2246669{col 48}{space 1}   -1.22{col 57}{space 3}0.223{col 65}{space 4}-.7141561{col 78}{space 3}  .166522
+{txt}{space 13}c_incband4 {c |}{col 25}{res}{space 2}-.2801921{col 37}{space 2} .2117261{col 48}{space 1}   -1.32{col 57}{space 3}0.186{col 65}{space 4}-.6951677{col 78}{space 3} .1347835
+{txt}{space 13}c_incband5 {c |}{col 25}{res}{space 2}-.0518456{col 37}{space 2} .2195041{col 48}{space 1}   -0.24{col 57}{space 3}0.813{col 65}{space 4}-.4820656{col 78}{space 3} .3783745
+{txt}{space 13}c_incband6 {c |}{col 25}{res}{space 2}-.1370479{col 37}{space 2} .2530173{col 48}{space 1}   -0.54{col 57}{space 3}0.588{col 65}{space 4}-.6329526{col 78}{space 3} .3588569
+{txt}{space 13}c_incband7 {c |}{col 25}{res}{space 2}        0{col 37}{txt}  (omitted)
+{space 7}c_accTenureAt101 {c |}{col 25}{res}{space 2}-1.264202{col 37}{space 2}  .957899{col 48}{space 1}   -1.32{col 57}{space 3}0.187{col 65}{space 4}-3.141649{col 78}{space 3} .6132457
+{txt}{space 7}c_accTenureAt102 {c |}{col 25}{res}{space 2}-1.625173{col 37}{space 2} .9516787{col 48}{space 1}   -1.71{col 57}{space 3}0.088{col 65}{space 4}-3.490429{col 78}{space 3} .2400831
+{txt}{space 7}c_accTenureAt103 {c |}{col 25}{res}{space 2}-1.513447{col 37}{space 2} .9597703{col 48}{space 1}   -1.58{col 57}{space 3}0.115{col 65}{space 4}-3.394562{col 78}{space 3} .3676687
+{txt}{space 7}c_accTenureAt104 {c |}{col 25}{res}{space 2}-1.567778{col 37}{space 2} .9965667{col 48}{space 1}   -1.57{col 57}{space 3}0.116{col 65}{space 4}-3.521013{col 78}{space 3} .3854569
+{txt}{space 7}c_accTenureAt105 {c |}{col 25}{res}{space 2}        0{col 37}{txt}  (omitted)
+{space 7}c_accTenureAt106 {c |}{col 25}{res}{space 2}-1.259637{col 37}{space 2} .9836571{col 48}{space 1}   -1.28{col 57}{space 3}0.200{col 65}{space 4} -3.18757{col 78}{space 3} .6682952
+{txt}{space 7}c_accTenureAt107 {c |}{col 25}{res}{space 2}        0{col 37}{txt}  (omitted)
+{space 10}c_roomNumAt10 {c |}{col 25}{res}{space 2}-.0455652{col 37}{space 2} .0311832{col 48}{space 1}   -1.46{col 57}{space 3}0.144{col 65}{space 4}-.1066831{col 78}{space 3} .0155527
+{txt}{space 5}c_motherSmokesat10 {c |}{col 25}{res}{space 2} .0163302{col 37}{space 2} .1230411{col 48}{space 1}    0.13{col 57}{space 3}0.894{col 65}{space 4}-.2248258{col 78}{space 3} .2574863
+{txt}{space 5}c_fatherSmokesat10 {c |}{col 25}{res}{space 2} .0328248{col 37}{space 2} .0897089{col 48}{space 1}    0.37{col 57}{space 3}0.714{col 65}{space 4}-.1430014{col 78}{space 3} .2086509
+{txt}{space 6}c_eyesightIssue10 {c |}{col 25}{res}{space 2}-.4412206{col 37}{space 2} .5695869{col 48}{space 1}   -0.77{col 57}{space 3}0.439{col 65}{space 4} -1.55759{col 78}{space 3} .6751492
+{txt}{space 7}c_hearingIssue10 {c |}{col 25}{res}{space 2}-.2563676{col 37}{space 2} .4515833{col 48}{space 1}   -0.57{col 57}{space 3}0.570{col 65}{space 4}-1.141455{col 78}{space 3} .6287195
+{txt}{space 8}c_speechIssue10 {c |}{col 25}{res}{space 2} .0090364{col 37}{space 2} 1.461492{col 48}{space 1}    0.01{col 57}{space 3}0.995{col 65}{space 4}-2.855435{col 78}{space 3} 2.873507
+{txt}{space 8}c_heightAt10_sd {c |}{col 25}{res}{space 2} .1859064{col 37}{space 2} .0601984{col 48}{space 1}    3.09{col 57}{space 3}0.002{col 65}{space 4} .0679198{col 78}{space 3}  .303893
+{txt}{space 8}c_weightAt10_sd {c |}{col 25}{res}{space 2}-.1293166{col 37}{space 2} .0596104{col 48}{space 1}   -2.17{col 57}{space 3}0.030{col 65}{space 4}-.2461509{col 78}{space 3}-.0124823
+{txt}{space 7}c_disengagedAt10 {c |}{col 25}{res}{space 2} .0095103{col 37}{space 2} .0515782{col 48}{space 1}    0.18{col 57}{space 3}0.854{col 65}{space 4}-.0915812{col 78}{space 3} .1106017
+{txt}{space 20}pcB {c |}{col 25}{res}{space 2} .0795401{col 37}{space 2} .0233454{col 48}{space 1}    3.41{col 57}{space 3}0.001{col 65}{space 4} .0337838{col 78}{space 3} .1252963
+{txt}{space 20}pcD {c |}{col 25}{res}{space 2}-.0406086{col 37}{space 2} .0301747{col 48}{space 1}   -1.35{col 57}{space 3}0.178{col 65}{space 4}-.0997498{col 78}{space 3} .0185327
+{txt}{space 20}pcE {c |}{col 25}{res}{space 2} .0439069{col 37}{space 2} .0385822{col 48}{space 1}    1.14{col 57}{space 3}0.255{col 65}{space 4}-.0317128{col 78}{space 3} .1195267
+{txt}{space 20}pcF {c |}{col 25}{res}{space 2} .0626229{col 37}{space 2} .0415871{col 48}{space 1}    1.51{col 57}{space 3}0.132{col 65}{space 4}-.0188863{col 78}{space 3} .1441322
+{txt}{space 20}pcG {c |}{col 25}{res}{space 2}-.0386546{col 37}{space 2} .0435707{col 48}{space 1}   -0.89{col 57}{space 3}0.375{col 65}{space 4}-.1240515{col 78}{space 3} .0467424
+{txt}{space 20}pcH {c |}{col 25}{res}{space 2} .0562159{col 37}{space 2} .0456855{col 48}{space 1}    1.23{col 57}{space 3}0.219{col 65}{space 4} -.033326{col 78}{space 3} .1457577
+{txt}{space 18}_cons {c |}{col 25}{res}{space 2} 2.824176{col 37}{space 2} 1.541392{col 48}{space 1}    1.83{col 57}{space 3}0.067{col 65}{space 4} -.196897{col 78}{space 3}  5.84525
+{txt}{hline 24}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+{com}. mfx
+
+{txt}Marginal effects after logit
+      y  = Pr(isManagerSupervisor) (predict)
+         = {res} .51518554
+{txt}{hline 9}{c TT}{hline 68}
+variable {c |}{col 17}dy/dx{col 26}Std. err.{col 40}z{col 45}P>|z|{col 52}[    95% C.I.   ]{col 75}X
+{hline 9}{c +}{hline 68}
+     pc1 {c |}  {res} .0290737      .00834    3.49   0.000    .01273  .045417   .341512
+{txt}per~2_sd {c |}  {res} .0159245      .01244    1.28   0.201  -.008467  .040316     .1451
+{txt}c_deli~m {c |}  {res}-.0043264      .01697   -0.26   0.799  -.037578  .028925   25.9959
+{txt}c_deli~2 {c |}  {res}-.0000453       .0003   -0.15   0.880  -.000631  .000541   703.961
+{txt}region_1*{c |}  {res} -.050686      .05215   -0.97   0.331  -.152891  .051519   .078099
+{txt}region_2*{c |}  {res}-.0616957      .04908   -1.26   0.209  -.157881   .03449   .101653
+{txt}region_3*{c |}  {res} .0055933      .05584    0.10   0.920  -.103842  .115029    .06281
+{txt}region_4*{c |}  {res}-.0801011      .06625   -1.21   0.227   -.20995  .049748   .036364
+{txt}region_5*{c |}  {res} .0289204      .04177    0.69   0.489  -.052952  .110793   .255372
+{txt}region_6*{c |}  {res}-.0195182      .05717   -0.34   0.733  -.131577   .09254   .059091
+{txt}region_7*{c |}  {res} .0903143      .04684    1.93   0.054    -.0015  .182128   .115289
+{txt}region_8*{c |}  {res}-.0279792      .04551   -0.61   0.539   -.11718  .061222   .143388
+{txt}region_9*{c |}  {res} .0681072      .05865    1.16   0.246  -.046844  .183059   .050413
+{txt}c_mums~d*{c |}  {res} .0305668      .02959    1.03   0.302  -.027421  .088555   .379752
+{txt}c_abno~t*{c |}  {res}-.0044079       .0243   -0.18   0.856  -.052044  .043228   .296694
+   {txt}sex_2*{c |}  {res}-.1465653      .02246   -6.52   0.000  -.190595 -.102535   .520248
+{txt}c_birt~t {c |}  {res} .0000167      .00002    0.72   0.470  -.000029  .000062   3326.33
+{txt}c_stay~m*{c |}  {res} .0707004      .02826    2.50   0.012   .015308  .126093   .388017
+{txt}c_stay~d*{c |}  {res}-.0213124      .02717   -0.78   0.433  -.074567  .031942   .399174
+{txt}c_parity {c |}  {res} .0234736      .01528    1.54   0.125  -.006484  .053431    1.0376
+{txt}c_p~der7*{c |}  {res} .0906578      .07721    1.17   0.240  -.060665   .24198   .019421
+{txt}c_p~ter7*{c |}  {res}-.0360158      .08739   -0.41   0.680  -.207304  .135272   .016529
+{txt}c_prev~h*{c |}  {res}-.0606609      .08313   -0.73   0.466  -.223597  .102275   .017769
+{txt}c_prev~s*{c |}  {res}-.0059613      .03207   -0.19   0.853  -.068814  .056892   .134298
+{txt}c_brea~d*{c |}  {res} .0349115      .02817    1.24   0.215  -.020301  .090124   .210744
+{txt}c_inpa~5*{c |}  {res}-.0141624      .02758   -0.51   0.608  -.068222  .039897   .208678
+{txt}c_hear~5*{c |}  {res} .0148084       .0276    0.54   0.592  -.039289  .068906   .200413
+{txt}c_chil~5*{c |}  {res}  .059855      .02551    2.35   0.019   .009856  .109854   .628099
+{txt}c_mum_~l*{c |}  {res} .0138916      .04434    0.31   0.754  -.073008  .100791   .435124
+{txt}c_mum_~y*{c |}  {res}-.0057178      .04232   -0.14   0.893  -.088665  .077229   .373967
+{txt}c_mum_~e*{c |}  {res} .1241992      .07884    1.58   0.115  -.030328  .278727    .02686
+{txt}c_dad_~l*{c |}  {res}-.0245066      .04173   -0.59   0.557  -.106287  .057274   .349174
+{txt}c_dad_~y*{c |}  {res}-.0100356      .04038   -0.25   0.804   -.08918  .069109    .32314
+{txt}c_dad_~e*{c |}  {res}-.0005139      .04937   -0.01   0.992  -.097275  .096247   .140083
+{txt}c_~FTAt5*{c |}  {res}-.0588796      .03131   -1.88   0.060   -.12024  .002481   .253306
+{txt}c_~PTAt5*{c |}  {res}-.0088244      .03039   -0.29   0.772  -.068386  .050737   .176446
+{txt}c_nonw~e*{c |}  {res} .1058348      .04294    2.46   0.014   .021668  .190002   .143802
+{txt}c_noSi~5 {c |}  {res} .0042156      .01897    0.22   0.824  -.032957  .041388   1.30537
+{txt}c_chi~10 {c |}  {res}-.0102451      .01563   -0.66   0.512  -.040885  .020395   2.47645
+{txt}c_inp~10*{c |}  {res}-.0184262      .02643   -0.70   0.486  -.070222   .03337   .220248
+{txt}c_fa~d10*{c |}  {res}   .15147      .07375    2.05   0.040   .006929  .296011   .022727
+{txt}c_f~me10*{c |}  {res} .2091907      .23908    0.87   0.382  -.259402  .677783   .002066
+{txt}c_mo~d10*{c |}  {res} .0208452      .03184    0.65   0.513   -.04156   .08325   .149174
+{txt}c_m~me10*{c |}  {res}-.0326594       .0267   -1.22   0.221  -.084995  .019677   .278099
+{txt}c_bene~t*{c |}  {res}-.0386944      .03006   -1.29   0.198  -.097617  .020228    .18843
+{txt}c_incb~1*{c |}  {res}-.1064103      .06001   -1.77   0.076   -.22402  .011199   .086364
+{txt}c_incb~2*{c |}  {res}-.0809767      .08284   -0.98   0.328  -.243333   .08138   .033058
+{txt}c_incb~3*{c |}  {res}-.0683455       .0559   -1.22   0.221  -.177903  .041212    .23843
+{txt}c_incb~4*{c |}  {res}-.0699262      .05266   -1.33   0.184  -.173137  .033285   .357025
+{txt}c_incb~5*{c |}  {res}-.0129546      .05486   -0.24   0.813  -.120481  .094572   .164463
+{txt}c_incb~6*{c |}  {res}-.0342486      .06318   -0.54   0.588  -.158078  .089581   .065289
+{txt}c_ac~101*{c |}  {res}-.2932513      .18856   -1.56   0.120   -.66282  .076317   .109091
+{txt}c_ac~102*{c |}  {res}-.3821505      .19895   -1.92   0.055  -.772093  .007792   .583884
+{txt}c_ac~103*{c |}  {res}-.3535591      .19398   -1.82   0.068  -.733744  .026626    .25124
+{txt}c_ac~104*{c |}  {res}-.3370308      .15324   -2.20   0.028  -.637369 -.036693   .020661
+{txt}c_ac~106*{c |}  {res}-.2862676        .181   -1.58   0.114  -.641015   .06848   .031405
+{txt}c_roo~10 {c |}  {res}-.0113808      .00779   -1.46   0.144  -.026646  .003884   5.01116
+{txt}c_moth..*{c |}  {res} .0040785      .03073    0.13   0.894  -.056146  .064302   .357438
+{txt}c_fath..*{c |}  {res} .0081985      .02241    0.37   0.714  -.035715  .052112   .501653
+{txt}c_eye~10*{c |}  {res}-.1077771      .13393   -0.80   0.421  -.370276  .154722   .994215
+{txt}c_hea~10*{c |}  {res} -.063937      .11186   -0.57   0.568  -.283174    .1553   .009504
+{txt}c_spe~10*{c |}  {res} .0022567      .36493    0.01   0.995   -.71299  .717503   .000826
+{txt}c_heig~d {c |}  {res} .0464337      .01504    3.09   0.002   .016965  .075903   .061376
+{txt}c_weig~d {c |}  {res}-.0322993      .01489   -2.17   0.030  -.061481 -.003118   .016765
+{txt}c_dis~10 {c |}  {res} .0023754      .01288    0.18   0.854  -.022874  .027625   .607025
+     {txt}pcB {c |}  {res} .0198667      .00583    3.41   0.001   .008438  .031295  -.031806
+     {txt}pcD {c |}  {res}-.0101428      .00754   -1.35   0.178  -.024914  .004629  -.033608
+     {txt}pcE {c |}  {res} .0109666      .00964    1.14   0.255  -.007921  .029854  -.060964
+     {txt}pcF {c |}  {res} .0156413      .01039    1.51   0.132  -.004717     .036   .059416
+     {txt}pcG {c |}  {res}-.0096547      .01088   -0.89   0.375  -.030984  .011675   .009518
+     {txt}pcH {c |}  {res}  .014041      .01141    1.23   0.219  -.008324  .036406     .0364
+{txt}{hline 9}{c BT}{hline 68}
+(*) dy/dx is for discrete change of dummy variable from 0 to 1
+
+{com}. 
+. log close
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}/Users/user/Library/CloudStorage/Dropbox/Econometrics/politicalBehaviour/bcs70_sens.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res} 4 Sep 2026, 13:13:57
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}
