@@ -3,7 +3,7 @@
 ## Overview
 
 This repository contains the code for replicating the empirical
-application in Section [X] of the paper. The application estimates
+application in Section 5 and 6 of the paper. The application estimates
 the effect of age-10 cognitive skills on labour-market outcomes at
 age 46 using data from the **1970 British Cohort Study (BCS70)**,
 and applies the synthetic confounder sensitivity analysis to assess
@@ -218,11 +218,10 @@ CH-adapted.
 
 2. Only **binary outcomes** are analysed. The sensitivity package
    supports logit, probit, cloglog, poisson, nbreg, ologit, and
-   mlogit. Continuous outcomes (hours, wages) require a separate
-   linear-model pipeline not included here.
+   mlogit.  
 
 3. The `sensitivity_profile` command (called for the profile plots)
-   is defined elsewhere in the codebase. If it is not available,
+   is used only for the plots in the appendix (mlogit). You may
    comment out the four `sensitivity_profile` lines before the
    `foreach` loop; the main grid, bisection, and benchmark results
    are unaffected.
