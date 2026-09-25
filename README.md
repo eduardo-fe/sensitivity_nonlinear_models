@@ -243,4 +243,4 @@ CH-adapted.
 If you use this code, please cite:
 
 > Fé, E. (2026). "Synthetic Confounder Sensitivity Analysis for
-> Nonlinear Models." Available at SSRN: [Working paper 7395379](https://ssrn.com/abstract=7395379 or http://dx.doi.org/10.2139/ssrn.7395379)
+> Nonlinear Models." Available at SSRN: [Working paper 7395379](http://dx.doi.org/10.2139/ssrn.7395379)
