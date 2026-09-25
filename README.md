@@ -9,6 +9,14 @@ age 46 using data from the **1970 British Cohort Study (BCS70)**,
 and applies the synthetic confounder sensitivity analysis to assess
 robustness to omitted variable bias.
 
+This md file was created using Claude AI, based on the files associated with
+this repository. 
+
+The code was written by the author (Eduardo Fe) using Claude and ChatGPT to 
+improve the routines in the file "sensitivity_v18...do" (particularly the bisection algorithm) 
+and the readability of the code. The data preparation_X.do files did not undergo such a procedure and are therefore considerably more "raw". 
+
+
 ## Data access
 
 The BCS70 is managed by the **Centre for Longitudinal Studies (CLS)**
@@ -187,7 +195,7 @@ Outputs are saved to `bcs70_sens.smcl`.
 
 ## Running the simulations
 
-The simulation studies (Section [X] of the paper) are also contained
+The simulation studies (Section 5 of the paper) are also contained
 in `sensitivity_v18_validate_full_with_sims-2.do`. They do not
 require BCS70 data — all data are generated within the script. To
 run the simulations only:
@@ -206,9 +214,9 @@ CH-adapted.
 
 - **Stata 16** or later (the script sets `version 16`)
 - No additional Stata packages are required; the sensitivity analysis
-  programs are self-contained within the .do file
+  programs are self-contained.
 
-## Important caveats
+## Some caveats
 
 1. The analysis uses **unweighted logit** without clustering. The
    BCS70 application in the paper is an illustration of the
@@ -225,6 +233,11 @@ CH-adapted.
    comment out the four `sensitivity_profile` lines before the
    `foreach` loop; the main grid, bisection, and benchmark results
    are unaffected.
+
+4. The code is offered "as is", and the author acknowledges that there
+   might be unintended errors in the code (or more efficient ways of
+   coding the routines). Do get in touch, however, if you find any
+   major issues, at eduardo.fe@manchester.ac.uk
 
 ## File manifest
 
